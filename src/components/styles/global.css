@@ -1,0 +1,225 @@
+/* Reset de Estilos */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Fonte e corpo da página */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #f7f7f7;
+  color: #333;
+  padding-top: 70px; /* Espaço para o header fixo */
+}
+
+/* Estilo do Header */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  border-bottom: 1px solid #eee;
+  padding: 16px 20px;
+  z-index: 1000;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Logo na esquerda no desktop */
+.site-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #000;
+  text-decoration: none;
+  position: static;
+  transform: none;
+}
+
+/* Menu de navegação */
+nav {
+  display: flex;
+  gap: 24px;
+  justify-content: flex-start; /* Menu na direita do desktop */
+  align-items: center; /* Alinha os itens verticalmente */
+}
+
+nav a {
+  color: #000;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 0; /* Adicionando padding para alinhamento */
+}
+
+/* Botões de Ação */
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: flex-end; /* Alinha os botões à direita */
+}
+
+.subscribe-button {
+  background-color: #000;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  display: flex;
+  align-items: center; /* Alinha verticalmente o texto do botão */
+  justify-content: center;
+}
+
+/* Ajustando os botões e links para estarem no mesmo nível */
+.action-buttons, nav {
+  align-items: center; /* Garante o alinhamento vertical */
+}
+
+
+/* Menu Hambúrguer */
+.menu-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.menu-hamburger div {
+  width: 25px;
+  height: 3px;
+  background-color: #000;
+}
+
+/* Responsividade */
+
+/* Para telas pequenas */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    align-items: center;
+    padding: 0 10px;
+  }
+
+  .site-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+    position: static;
+    transform: none;
+  }
+
+  nav {
+    display: none; /* Menu oculto inicialmente */
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    text-align: left;
+    margin-top: 20px;
+  }
+
+  .nav-menu.active {
+    display: flex; /* Menu visível quando ativo */
+  }
+
+  .menu-hamburger {
+    display: flex;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+  }
+
+  .subscribe-button {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+}
+
+/* Para telas extra pequenas (dispositivos muito pequenos) */
+@media (max-width: 480px) {
+  .site-title {
+    font-size: 16px;
+  }
+
+  nav a {
+    font-size: 12px;
+  }
+
+  .subscribe-button {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+}
+
+/* Estilo para as seções principais */
+main {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+/* Seções de conteúdo */
+.hero-section {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.hero-section h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+.hero-section p {
+  font-size: 1.2rem;
+  color: #666;
+  margin-top: 10px;
+}
+
+.latest-posts {
+  margin-bottom: 60px;
+}
+
+.latest-posts h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.posts-list {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.posts-list .post-item {
+  flex: 1;
+  min-width: 250px;
+  margin-bottom: 30px;
+}
+
+/* Footer */
+.footer {
+  padding: 20px 0;
+  border-top: 1px solid #eee;
+  background-color: #fff;
+  margin-top: 40px;
+}
+
+.footer-content {
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.footer-text {
+  color: #666;
+  font-size: 14px;
+}

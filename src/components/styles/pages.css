@@ -1,0 +1,142 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+  }
+  
+  /* Containers */
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+  
+  .about-container {
+    max-width: 1200px;
+    padding: 20px;
+    margin: 0 auto;
+  }
+  
+  /* Archive */
+  .archive-container h1 {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 40px;
+  }
+  
+  .posts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  
+  .post-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .post-category {
+    text-transform: uppercase;
+    font-size: 13px;
+    color: #666;
+    letter-spacing: 0.5px;
+  }
+  
+  .post-link {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .post-link:hover h2 {
+    text-decoration: underline;
+  }
+  
+  .post-link h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 8px 0;
+  }
+  
+  .post-meta {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  /* Post Detail */
+  .post-detail {
+    max-width: 680px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+  
+  /* About */
+  .about-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .about-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .about-header p {
+    font-size: 1.2rem;
+    color: #555;
+  }
+  
+  .about-content {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  
+  .about-content h2 {
+    font-size: 2rem;
+    margin-top: 30px;
+    color: #333;
+  }
+  
+  .about-content p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #555;
+  }
+  
+  .about-content ul {
+    list-style-type: disc;
+    margin-left: 20px;
+  }
+  
+  .about-content a {
+    color: #0066cc;
+    text-decoration: none;
+  }
+  
+  .contact-section {
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin-top: 30px;
+    border-radius: 8px;
+  }
+  
+  .contact-section h3 {
+    font-size: 1.5rem;
+  }
+  
+  .contact-section p {
+    font-size: 1.1rem;
+  }
+  
+  /* Spacing Adjustments */
+  section {
+    margin-top: 40px;
+  }
+  

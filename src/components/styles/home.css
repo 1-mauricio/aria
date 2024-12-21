@@ -1,0 +1,115 @@
+/* Hero Section */
+.hero-section {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.hero-text h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.hero-text p {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.cta-btn {
+  padding: 12px 24px;
+  background-color: #007BFF;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.cta-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Featured Post */
+.featured-post {
+  padding: 30px 20px;
+  margin-top: 40px;
+  background-color: #fff;
+  box-shadow: none; /* Removendo sombra */
+  border-radius: 8px;
+}
+
+.featured-post h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.featured-post-link {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.featured-post-link:hover {
+  background-color: #0056b3;
+}
+
+/* Últimos Posts */
+.latest-posts {
+  margin-top: 60px;
+}
+
+.latest-posts h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.posts-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+
+/* Remover bordas e sombras dos posts */
+.posts-list .post-item {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 6px;
+  box-shadow: none; /* Removendo sombra */
+}
+
+.posts-list .post-item h3 {
+  font-size: 1.2rem; /* Tamanho de texto menor */
+  font-weight: 500;
+  color: #333;
+}
+
+.posts-list .post-item p {
+  font-size: 1rem;
+  color: #777; /* Cor do texto mais suave */
+}
+
+.posts-list .post-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.posts-list .post-item:hover {
+  box-shadow: none; /* Garantir que a sombra não aparece ao passar o mouse */
+  transform: none; /* Garantir que não há efeito de transformação */
+}
+
+.latest-posts .posts-list {
+  padding-top: 30px;
+}
