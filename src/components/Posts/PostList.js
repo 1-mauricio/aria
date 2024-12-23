@@ -3,21 +3,27 @@ import PostItem from './PostItem';
 import { fetchPosts } from '../../services/PostService';
 import '../styles/posts.css';
 
-export default function PostList() {
-  const [posts, setPosts] = useState([]);
+export default function PostList({ postsList = [] }) {
+  const [posts, setPosts] = useState(postsList);  // Usa postsList como valor inicial
 
   useEffect(() => {
-    fetchPosts()
-      .then(setPosts)
-      .catch((error) => console.error('Erro ao carregar posts:', error));
-  }, []);
+    if (postsList.length === 0) {  // Só faz o fetch se postsList estiver vazio
+      fetchPosts()
+        .then(setPosts)
+        .catch((error) => console.error('Erro ao carregar posts:', error));
+    }
+  }, [postsList]);  // Dependência de postsList
 
   return (
     <main className="archive-container">
       <div className="posts-list">
-        {posts.map((post) => (
-          <PostItem key={post.id} post={post} />
-        ))}
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <PostItem key={post.id} post={post} />
+          ))
+        ) : (
+          <p>Nenhum post encontrado.</p>  // Caso não haja posts
+        )}
       </div>
     </main>
   );

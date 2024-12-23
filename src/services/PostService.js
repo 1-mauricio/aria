@@ -1,6 +1,6 @@
 import mockPosts from './mock.json';
 
-const API_URL = 'http://localhost:8080/api/posts';
+const API_URL = 'https://imprensamalakoff-backend.onrender.com/api/posts';
 /*
 export const fetchPosts = async () => {
   return Promise.resolve(mockPosts);

@@ -5,13 +5,92 @@
   box-sizing: border-box;
 }
 
+html, body, #root {
+  height: 100%;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
 /* Fonte e corpo da página */
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background-color: #f7f7f7;
   color: #333;
   padding-top: 70px; /* Espaço para o header fixo */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
+
+/* Estilo para as seções principais */
+main {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+  flex: 1 0 auto;
+}
+
+/* Seções de conteúdo */
+.hero-section {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.hero-section h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+.hero-section p {
+  font-size: 1.2rem;
+  color: #666;
+  margin-top: 10px;
+}
+
+.latest-posts {
+  margin-bottom: 60px;
+}
+
+.latest-posts h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.posts-list {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.posts-list .post-item {
+  flex: 1;
+  min-width: 250px;
+  margin-bottom: 30px;
+}
+
+/* Footer */
+.footer {
+  padding: 20px 0;
+  border-top: 1px solid #eee;
+  background-color: #fff;
+  flex-shrink: 0;
+  margin-top: auto;
+}
+
+.footer-content {
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.footer-text {
+  color: #666;
+  font-size: 14px;
+}
+
 
 /* Estilo do Header */
 .header {
@@ -117,6 +196,10 @@ nav a {
     transform: none;
   }
 
+  main {
+    margin: 0;
+  }
+
   nav {
     display: none; /* Menu oculto inicialmente */
     flex-direction: column;
@@ -145,6 +228,10 @@ nav a {
 
 /* Para telas extra pequenas (dispositivos muito pequenos) */
 @media (max-width: 480px) {
+  main {
+    margin: 0;
+  }
+
   .site-title {
     font-size: 16px;
   }
@@ -157,69 +244,4 @@ nav a {
     font-size: 12px;
     padding: 6px 12px;
   }
-}
-
-/* Estilo para as seções principais */
-main {
-  max-width: 1200px;
-  margin: 40px auto;
-  padding: 0 20px;
-}
-
-/* Seções de conteúdo */
-.hero-section {
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-.hero-section h1 {
-  font-size: 2.5rem;
-  font-weight: 600;
-}
-
-.hero-section p {
-  font-size: 1.2rem;
-  color: #666;
-  margin-top: 10px;
-}
-
-.latest-posts {
-  margin-bottom: 60px;
-}
-
-.latest-posts h2 {
-  font-size: 1.8rem;
-  font-weight: 600;
-  margin-bottom: 20px;
-}
-
-.posts-list {
-  display: flex;
-  gap: 24px;
-  flex-wrap: wrap;
-}
-
-.posts-list .post-item {
-  flex: 1;
-  min-width: 250px;
-  margin-bottom: 30px;
-}
-
-/* Footer */
-.footer {
-  padding: 20px 0;
-  border-top: 1px solid #eee;
-  background-color: #fff;
-  margin-top: 40px;
-}
-
-.footer-content {
-  max-width: 680px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.footer-text {
-  color: #666;
-  font-size: 14px;
 }

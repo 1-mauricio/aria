@@ -12,7 +12,7 @@ export default function Header() {
     <header className="header">
       <div className="header-content">
         <Link to="/" className="site-title">
-          ImprensaMalakoff
+          Imprensa Malakoff
         </Link>
 
         {/* Menu Hambúrguer (visível apenas em dispositivos móveis) */}

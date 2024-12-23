@@ -7,6 +7,7 @@ import PostDetail from './components/Posts/PostDetail';
 import About from './components/Pages/About';
 import { fetchPosts } from './services/PostService'; // Ajuste conforme necessário
 import Footer from './components/Layout/Footer';
+import Subscribe from './components/Pages/Subscribe';
 
 export default function App() {
   const [posts, setPosts] = useState([]);
@@ -26,6 +27,7 @@ export default function App() {
         <Route path="/archive" element={<Archive posts={posts} />} /> {/* Passa os posts aqui */}
         <Route path="/posts/:id" element={<PostDetail />} />
         <Route path="/about" element={<About />} />
+        <Route path="/subscribe" element={<Subscribe />} />
       </Routes>
       <Footer />
     </BrowserRouter>
