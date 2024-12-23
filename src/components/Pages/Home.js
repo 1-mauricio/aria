@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PostItem from '../Posts/PostItem';
+import { Link } from 'react-router-dom';
 import { fetchPosts } from '../../services/PostService';
 import '../styles/home.css';
 
@@ -37,7 +38,7 @@ export default function Home() {
         <div className="hero-text">
           <h1>Bem-vindo ao Imprensa Malakoff</h1>
           <p>Fique por dentro das últimas notícias e tendências sobre design, tecnologia e ética na web.</p>
-          <a href="/archive" className="cta-btn">Explorar Todos os Posts</a>
+          <Link to="/archive" className="cta-btn">Explorar Todos os Posts</Link> 
         </div>
       </section>
 
@@ -46,7 +47,7 @@ export default function Home() {
         <section className="featured-post">
           <h2>Post em Destaque</h2>
           <PostItem post={featuredPost} />
-          <a href={`/posts/${featuredPost.id}`} className="featured-post-link">Leia o post completo</a>
+          <Link to={`/posts/${featuredPost.id}`} className="featured-post-link">Leia o post completo</Link>
         </section>
       )}
 
