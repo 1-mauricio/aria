@@ -5,7 +5,7 @@ import Home from './components/Pages/Home';
 import Archive from './components/Pages/Archive';
 import PostDetail from './components/Posts/PostDetail';
 import About from './components/Pages/About';
-import { fetchPosts } from './services/PostService'; // Ajuste conforme necessário
+import { fetchPosts } from './services/PostService';
 import Footer from './components/Layout/Footer';
 import Subscribe from './components/Pages/Subscribe';
 
@@ -24,7 +24,7 @@ export default function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/archive" element={<Archive posts={posts} />} /> {/* Passa os posts aqui */}
+        <Route path="/archive" element={<Archive posts={posts} />} />
         <Route path="/posts/:id" element={<PostDetail />} />
         <Route path="/about" element={<About />} />
         <Route path="/subscribe" element={<Subscribe />} />

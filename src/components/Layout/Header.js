@@ -8,6 +8,10 @@ export default function Header() {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
     <header className="header">
       <div className="header-content">
@@ -15,20 +19,18 @@ export default function Header() {
           Imprensa Malakoff
         </Link>
 
-        {/* Menu Hambúrguer (visível apenas em dispositivos móveis) */}
         <div className="menu-hamburger" onClick={toggleMenu}>
           <div></div>
           <div></div>
           <div></div>
         </div>
-
-        {/* Navegação (visível em desktop ou quando o menu hambúrguer for ativado) */}
+        
         <nav className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
-          <Link to="/">Home</Link>
-          <Link to="/archive">Posts</Link>
-          <Link to="/about">Sobre</Link>
+          <Link to="/" onClick={closeMenu}>Home</Link> 
+          <Link to="/archive" onClick={closeMenu}>Posts</Link> 
+          <Link to="/about" onClick={closeMenu}>Sobre</Link> 
           <div className="action-buttons">
-            <Link to="/subscribe" className="subscribe-button">Inscreva-se</Link>
+            <Link to="/subscribe" className="subscribe-button" onClick={closeMenu}>Inscreva-se</Link> 
           </div>
         </nav>
       </div>
