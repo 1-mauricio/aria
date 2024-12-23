@@ -2,7 +2,6 @@
   "name": "posts-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://imprensamalakoff-frontend.onrender.com/",
   "dependencies": {
     "axios": "^1.7.9",
     "cra-template": "1.2.0",
