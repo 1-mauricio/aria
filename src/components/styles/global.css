@@ -73,11 +73,9 @@ main {
 
 /* Footer */
 .footer {
-  padding: 20px 0;
+  padding: 40px 20px;
   border-top: 1px solid #eee;
   background-color: #fff;
-  flex-shrink: 0;
-  margin-top: auto;
 }
 
 .footer-content {
@@ -86,10 +84,41 @@ main {
   text-align: center;
 }
 
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.footer-links a {
+  color: #333;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.footer-social {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.footer-social a {
+  color: #666;
+  text-decoration: none;
+  font-size: 14px;
+}
+
 .footer-text {
   color: #666;
   font-size: 14px;
 }
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
 
 
 /* Estilo do Header */
@@ -162,6 +191,50 @@ nav a {
 /* Ajustando os botões e links para estarem no mesmo nível */
 .action-buttons, nav {
   align-items: center; /* Garante o alinhamento vertical */
+}
+
+.not-found-container {
+  min-height: calc(100vh - 200px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.not-found-content {
+  text-align: center;
+  max-width: 500px;
+}
+
+.not-found-content h1 {
+  font-size: 120px;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1;
+}
+
+.not-found-content h2 {
+  font-size: 24px;
+  margin: 20px 0;
+}
+
+.not-found-content p {
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.home-button {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #000;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.home-button:hover {
+  background-color: #333;
 }
 
 

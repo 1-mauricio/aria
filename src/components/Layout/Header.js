@@ -27,10 +27,15 @@ export default function Header() {
         
         <nav className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
           <Link to="/" onClick={closeMenu}>Home</Link> 
-          <Link to="/archive" onClick={closeMenu}>Posts</Link> 
-          <Link to="/about" onClick={closeMenu}>Sobre</Link> 
+          <Link to="/posts" onClick={closeMenu}>Posts</Link> 
+          <Link to="/sobre" onClick={closeMenu}>Sobre</Link> 
+          {/*
           <div className="action-buttons">
-            <Link to="/subscribe" className="subscribe-button" onClick={closeMenu}>Inscreva-se</Link> 
+            <Link to="/inscreva-se" className="subscribe-button" onClick={closeMenu}>Inscreva-se</Link> 
+          </div>
+          */}
+          <div className="action-buttons">
+            <Link to="/doe" className="subscribe-button" onClick={closeMenu}>Apoie</Link> 
           </div>
         </nav>
       </div>

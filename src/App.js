@@ -8,6 +8,8 @@ import About from './components/Pages/About';
 import { fetchPosts } from './services/PostService';
 import Footer from './components/Layout/Footer';
 import Subscribe from './components/Pages/Subscribe';
+import Donate from './components/Pages/Donate';
+import NotFound from './components/Pages/NotFound';
 
 export default function App() {
   const [posts, setPosts] = useState([]);
@@ -24,10 +26,12 @@ export default function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/archive" element={<Archive posts={posts} />} />
-        <Route path="/posts/:id" element={<PostDetail />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/subscribe" element={<Subscribe />} />
+        <Route path="/posts" element={<Archive posts={posts} />} />
+        <Route path="/post/:id" element={<PostDetail />} />
+        <Route path="/sobre" element={<About />} />
+        <Route path="/inscreva-se" element={<Subscribe />} />
+        <Route path="/doe" element={<Donate />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </BrowserRouter>

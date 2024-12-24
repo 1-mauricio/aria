@@ -10,7 +10,7 @@ export default function Archive() {
 
   useEffect(() => {
     setLoading(true);
-    fetchPosts() // Se você estiver recebendo posts de uma API ou outro serviço
+    fetchPosts() 
       .then((data) => {
         setPosts(data);
         setLoading(false);
