@@ -9,9 +9,7 @@ export default function PostItem({ post }) {
       <Link to={`/posts/${post.id}`} className="post-link">
         <h2>{post.title}</h2>
         <p>{post.subTitle}</p>
-        <div className="post-meta">
-          {post.date} · {post.readTime} min
-        </div>
+        <p>{post.date} · {post.readTime} min</p>
       </Link>
     </article>
   );

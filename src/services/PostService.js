@@ -29,7 +29,7 @@ export const fetchPostById = async (id) => {
       date: formatDate(post.date), // Formata a data
     }));
   
-    return formattedPosts;
+    return formattedPosts.reverse();
   };
   
   export const fetchPostById = async (id) => {
