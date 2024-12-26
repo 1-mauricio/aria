@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import PostItem from '../Posts/PostItem';
 import { Link } from 'react-router-dom';
 import { fetchPosts } from '../../services/PostService';
-import '../styles/home.css';
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -66,6 +65,46 @@ export default function Home() {
         </section>
       )}
 
+<div className="most-viewed-container">
+        <div className="most-viewed-section">
+            <h2>Mais lidos da semana</h2>
+            <div className="most-viewed-list">
+            {mostViewedWeek.length ? (
+                mostViewedWeek.map((post, index) => (
+                <Link to={`/post/${post.id}`} key={post.id} className="most-viewed-item">
+                    <span className="most-viewed-number">{index + 1}</span>
+                    <div className="most-viewed-content">
+                    <h3>{post.title}</h3>
+                    <span className="most-viewed-date">{post.date}</span>
+                    </div>
+                </Link>
+                ))
+            ) : (
+                <p>Nenhum post visualizado esta semana.</p>
+            )}
+            </div>
+        </div>
+
+        <div className="most-viewed-section">
+            <h2>Mais lidos do mês</h2>
+            <div className="most-viewed-list">
+            {mostViewedMonth.length ? (
+                mostViewedMonth.map((post, index) => (
+                <Link to={`/post/${post.id}`} key={post.id} className="most-viewed-item">
+                    <span className="most-viewed-number">{index + 1}</span>
+                    <div className="most-viewed-content">
+                    <h3>{post.title}</h3>
+                    <span className="most-viewed-date">{post.date}</span>
+                    </div>
+                </Link>
+                ))
+            ) : (
+                <p>Nenhum post visualizado este mês.</p>
+            )}
+            </div>
+        </div>
+    </div>
+
       {/* Latest Posts */}
       <section className="latest-posts">
         <h2>Últimos Posts</h2>
@@ -73,32 +112,6 @@ export default function Home() {
           {latestPosts.slice(0, 3).map(post => (
             <PostItem key={post.id} post={post} />
           ))}
-        </div>
-      </section>
-
-      <section className="most-viewed-week">
-        <h2>Mais Vistos da Semana</h2>
-        <div className="posts-list">
-          {mostViewedWeek.length ? (
-            mostViewedWeek.map(post => (
-              <PostItem key={post.id} post={post} />
-            ))
-          ) : (
-            <p>Nenhum post visualizado esta semana.</p>
-          )}
-        </div>
-      </section>
-
-      <section className="most-viewed-month">
-        <h2>Mais Vistos do Mês</h2>
-        <div className="posts-list">
-          {mostViewedMonth.length ? (
-            mostViewedMonth.map(post => (
-              <PostItem key={post.id} post={post} />
-            ))
-          ) : (
-            <p>Nenhum post visualizado este mês.</p>
-          )}
         </div>
       </section>
 

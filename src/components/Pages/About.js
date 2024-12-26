@@ -1,16 +1,15 @@
 import React from 'react';
-import '../styles/pages.css'; // Se você estiver usando um arquivo de estilo externo, caso contrário, adicione o estilo aqui.
 
 export default function About() {
   return (
     <main className="about-container">
       <div className="about-header">
-        <h1>Sobre o Blog</h1>
-        <p>Bem-vindo ao <strong>ImprensaMalakoff</strong>, o seu lugar para reflexões profundas, análises detalhadas e histórias inspiradoras sobre design, tecnologia, ética e muito mais!</p>
+        <h1>Sobre o Imprensa Malakoff</h1>
+        <p>Bem-vindo ao <strong>Imprensa Malakoff</strong>, o seu lugar para reflexões profundas, análises detalhadas e histórias inspiradoras sobre design, tecnologia, ética e muito mais!</p>
       </div>
       <section className="about-content">
         <h2>O Que Fazemos?</h2>
-        <p>No <strong>ImprensaMalakoff</strong>, acreditamos no poder das palavras para inspirar mudanças e provocar discussões. Nosso objetivo é explorar as interseções entre tecnologia, ética, design e as questões sociais contemporâneas. Através de artigos, análises e estudos de caso, buscamos não apenas informar, mas também incentivar nossos leitores a pensar criticamente sobre o mundo ao seu redor.</p>
+        <p>No <strong>Imprensa Malakoff</strong>, acreditamos no poder das palavras para inspirar mudanças e provocar discussões. Nosso objetivo é explorar as interseções entre tecnologia, ética, design e as questões sociais contemporâneas. Através de artigos, análises e estudos de caso, buscamos não apenas informar, mas também incentivar nossos leitores a pensar criticamente sobre o mundo ao seu redor.</p>
 
         <h2>Nossa Missão</h2>
         <p>Nossa missão é fornecer conteúdo que não apenas eduque, mas também desafie as percepções. Queremos ser um ponto de encontro para aqueles que buscam um olhar mais profundo sobre os tópicos que moldam o presente e o futuro da sociedade digital. Seja você um entusiasta de tecnologia, um designer ou alguém com interesse por questões éticas, temos algo para você.</p>

@@ -1,6 +1,5 @@
 // src/components/Pages/Subscribe.js
 import React, { useState } from 'react';
-import '../styles/pages.css';
 
 export default function Subscribe() {
   const [formData, setFormData] = useState({

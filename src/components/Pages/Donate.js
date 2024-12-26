@@ -1,5 +1,4 @@
 import React from 'react';
-import '../styles/pages.css';
 
 export default function Donate() {
   return (
@@ -24,12 +23,15 @@ export default function Donate() {
         </div>
         */}
 
+        {/*
         <div className="donate-card">
           <h2>Contribuição Única</h2>
           <p>Escolha o valor</p>
           <button className="donate-button">Contribuir</button>
         </div>
-      </section>
+        */}
+        </section>
+      
     </main>
   );
 }

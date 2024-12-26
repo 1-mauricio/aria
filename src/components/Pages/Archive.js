@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/pages.css';
 import PostList from '../Posts/PostList';
 import { fetchPosts } from '../../services/PostService'; // ou a função apropriada para buscar os posts
 

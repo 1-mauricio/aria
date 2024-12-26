@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchPostById } from "../../services/PostService";
-import "../styles/post-detail.css";
 
 export default function PostDetail() {
   const { id } = useParams();

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PostItem from './PostItem';
 import { fetchPosts } from '../../services/PostService';
-import '../styles/posts.css';
 
 export default function PostList({ postsList = [] }) {
   const [posts, setPosts] = useState(postsList);  // Usa postsList como valor inicial
@@ -15,16 +14,16 @@ export default function PostList({ postsList = [] }) {
   }, [postsList]);  // Dependência de postsList
 
   return (
-    <main className="archive-container">
-      <div className="posts-list">
-        {posts.length > 0 ? (
-          posts.map((post) => (
-            <PostItem key={post.id} post={post} />
-          ))
-        ) : (
-          <p>Nenhum post encontrado.</p>  // Caso não haja posts
-        )}
-      </div>
-    </main>
+   
+    <div className="posts-list">
+      {posts.length > 0 ? (
+        posts.map((post) => (
+          <PostItem key={post.id} post={post} />
+        ))
+      ) : (
+        <p>Nenhum post encontrado.</p>  // Caso não haja posts
+      )}
+    </div>
+    
   );
 }
