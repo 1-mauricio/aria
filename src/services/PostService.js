@@ -1,5 +1,4 @@
 const API_URL = 'https://imprensamalakoff-backend.onrender.com/api/posts';
-const API_URL2 = 'http://localhost:8080/api/posts';
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -41,7 +40,7 @@ const API_URL2 = 'http://localhost:8080/api/posts';
   };
 
   export const searchPost = async (searchTerm) => {
-    const response = await fetch(`${API_URL2}/search?searchTerm=${searchTerm}`);
+    const response = await fetch(`${API_URL}/search?searchTerm=${searchTerm}`);
     console.log(response)
     if (!response.ok) throw new Error('Erro ao buscar post');
     const posts = await response.json();
