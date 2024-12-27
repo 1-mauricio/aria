@@ -1,7 +1,7 @@
 .cta-btn {
   padding: 12px 24px;
   background-color: var(--primary-color);
-  color: white;
+  color: var(--button-text);
   text-decoration: none;
   border-radius: 4px;
   font-size: 1rem;

@@ -10,6 +10,7 @@ import Footer from './components/Layout/Footer';
 import Subscribe from './components/Pages/Subscribe';
 import Donate from './components/Pages/Donate';
 import NotFound from './components/Pages/NotFound';
+import Search from './components/Pages/Search';
 
 export default function App() {
   const [posts, setPosts] = useState([]);
@@ -32,6 +33,7 @@ export default function App() {
         <Route path="/sobre" element={<About />} />
         <Route path="/inscreva-se" element={<Subscribe />} />
         <Route path="/doe" element={<Donate />} />
+        <Route path="/search" element={<Search />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

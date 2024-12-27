@@ -1,4 +1,5 @@
 const API_URL = 'https://imprensamalakoff-backend.onrender.com/api/posts';
+const API_URL2 = 'http://localhost:8080/api/posts';
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -21,7 +22,6 @@ const API_URL = 'https://imprensamalakoff-backend.onrender.com/api/posts';
   export async function fetchPostByTitle(title) {
     const response = await fetch(`${API_URL}/title?title=${encodeURIComponent(title)}`);
     if (!response.ok) throw new Error('Erro ao buscar post pelo título');
-    console.log(response)
 
     const post = await response.json();
   
@@ -38,4 +38,18 @@ const API_URL = 'https://imprensamalakoff-backend.onrender.com/api/posts';
     post.date = formatDate(post.date);
   
     return post;
+  };
+
+  export const searchPost = async (searchTerm) => {
+    const response = await fetch(`${API_URL2}/search?searchTerm=${searchTerm}`);
+    console.log(response)
+    if (!response.ok) throw new Error('Erro ao buscar post');
+    const posts = await response.json();
+  
+    const formattedPosts = posts.map(post => ({
+      ...post,
+      date: formatDate(post.date), 
+    }));
+  
+    return formattedPosts;
   };

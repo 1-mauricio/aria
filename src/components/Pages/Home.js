@@ -61,11 +61,11 @@ export default function Home() {
         <section className="featured-post">
           <h2>Post em Destaque</h2>
           <PostItem post={featuredPost} />
-          <Link to={`/post/${featuredPost.title}`} className="featured-post-link">Leia o post completo</Link>
+          <Link to={`/post/${featuredPost.title}`} className="cta-btn ">Leia o post completo</Link>
         </section>
       )}
 
-<div className="most-viewed-container">
+      <div className="most-viewed-container">
         <div className="most-viewed-section">
             <h2>Mais lidos da semana</h2>
             <div className="most-viewed-list">
@@ -103,7 +103,7 @@ export default function Home() {
             )}
             </div>
         </div>
-    </div>
+      </div>
 
       {/* Latest Posts */}
       <section className="latest-posts">

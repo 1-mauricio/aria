@@ -5,6 +5,7 @@ import App from './App';
 import './components/styles/global.css';
 
 import './components/styles/about.css';
+import './components/styles/archive.css';
 import './components/styles/donate.css';
 import './components/styles/footer.css';
 import './components/styles/header.css';
