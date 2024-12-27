@@ -53,18 +53,37 @@ export default function Header() {
 
         <div className="right-section">
           <button onClick={toggleTheme} className="theme-button">
-            <svg
-              className="theme-icon"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M21 12.75a8.25 8.25 0 11-8.719-8.217 6 6 0 108.719 8.217z"></path>
-            </svg>
+          {!isDarkMode ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="theme-icon"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 12.75a8.25 8.25 0 11-8.719-8.217 6 6 0 108.719 8.217z"
+                />
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="theme-icon"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 3v1.5M12 19.5V21M4.636 4.636l1.061 1.061M17.303 17.303l1.061 1.061M3 12h1.5M19.5 12H21M4.636 19.364l1.061-1.061M17.303 6.697l1.061-1.061M12 7.5a4.5 4.5 0 100 9 4.5 4.5 0 000-9z"
+                />
+              </svg>
+            )}
           </button>
 
           <div className="menu-hamburger" onClick={() => setIsMenuOpen(!isMenuOpen)}>
