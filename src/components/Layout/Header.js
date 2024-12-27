@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function Header() {
@@ -7,30 +7,40 @@ export default function Header() {
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
 
-  // Função para alternar o tema
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-    if (isDarkMode) {
-      document.body.removeAttribute('data-theme');
-      localStorage.setItem('theme', 'light');
-    } else {
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      setIsDarkMode(true);
       document.body.setAttribute('data-theme', 'dark');
-      localStorage.setItem('theme', 'dark');
+    } else {
+      setIsDarkMode(false);
+      document.body.removeAttribute('data-theme');
     }
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = !isDarkMode ? 'dark' : 'light';
+    setIsDarkMode(!isDarkMode);
+
+    if (newTheme === 'dark') {
+      document.body.setAttribute('data-theme', 'dark');
+    } else {
+      document.body.removeAttribute('data-theme');
+    }
+
+    localStorage.setItem('theme', newTheme);
   };
 
-  // Função para atualizar o valor da pesquisa
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
 
-  // Função para realizar a pesquisa
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
       navigate(`/search?searchTerm=${encodeURIComponent(searchQuery.trim())}`);
-      setSearchQuery(''); // Limpa o campo de busca após redirecionar
-      setIsMenuOpen(false); // Fecha o menu, caso esteja aberto
+      setSearchQuery(''); 
+      setIsMenuOpen(false);
     }
   };
 
