@@ -27,7 +27,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/posts" element={<Archive posts={posts} />} />
-        <Route path="/post/:id" element={<PostDetail />} />
+        <Route path="post/:id" element={<PostDetail />} />
+        <Route path="post/:titulo" element={<PostDetail />} />
         <Route path="/sobre" element={<About />} />
         <Route path="/inscreva-se" element={<Subscribe />} />
         <Route path="/doe" element={<Donate />} />

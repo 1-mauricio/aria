@@ -17,6 +17,18 @@ const API_URL = 'https://imprensamalakoff-backend.onrender.com/api/posts';
   
     return formattedPosts.reverse();
   };
+
+  export async function fetchPostByTitle(title) {
+    const response = await fetch(`${API_URL}/title?title=${encodeURIComponent(title)}`);
+    if (!response.ok) throw new Error('Erro ao buscar post pelo título');
+    console.log(response)
+
+    const post = await response.json();
+  
+    post.date = formatDate(post.date);
+
+    return post;
+  }
   
   export const fetchPostById = async (id) => {
     const response = await fetch(`${API_URL}/${id}`);

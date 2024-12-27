@@ -61,7 +61,7 @@ export default function Home() {
         <section className="featured-post">
           <h2>Post em Destaque</h2>
           <PostItem post={featuredPost} />
-          <Link to={`/post/${featuredPost.id}`} className="featured-post-link">Leia o post completo</Link>
+          <Link to={`/post/${featuredPost.title}`} className="featured-post-link">Leia o post completo</Link>
         </section>
       )}
 
@@ -71,7 +71,7 @@ export default function Home() {
             <div className="most-viewed-list">
             {mostViewedWeek.length ? (
                 mostViewedWeek.map((post, index) => (
-                <Link to={`/post/${post.id}`} key={post.id} className="most-viewed-item">
+                <Link to={`/post/${post.title}`} key={post.id} className="most-viewed-item">
                     <span className="most-viewed-number">{index + 1}</span>
                     <div className="most-viewed-content">
                     <h3>{post.title}</h3>
@@ -90,7 +90,7 @@ export default function Home() {
             <div className="most-viewed-list">
             {mostViewedMonth.length ? (
                 mostViewedMonth.map((post, index) => (
-                <Link to={`/post/${post.id}`} key={post.id} className="most-viewed-item">
+                <Link to={`/post/${post.title}`} key={post.id} className="most-viewed-item">
                     <span className="most-viewed-number">{index + 1}</span>
                     <div className="most-viewed-content">
                     <h3>{post.title}</h3>

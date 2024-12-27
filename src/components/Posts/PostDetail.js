@@ -1,23 +1,47 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchPostById } from "../../services/PostService";
+import { fetchPostById, fetchPostByTitle } from "../../services/PostService";
+import NotFound from '../Pages/NotFound';
 
 export default function PostDetail() {
-  const { id } = useParams();
+  const { id } = useParams(); 
   const [post, setPost] = useState(null);
-  const [loading, setLoading] = useState(true); // Estado de loading
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  function generateSlug(titulo) {
+    return titulo.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
+  }
 
   useEffect(() => {
-    setLoading(true); // Começa o carregamento
-    fetchPostById(id)
-      .then((data) => {
-        setPost(data);
-        setLoading(false); // Finaliza o carregamento
-      })
-      .catch((error) => {
+    setLoading(true);
+    setError(false);
+
+    const fetchPost = async () => {
+      try {
+        let data;
+        const param = parseInt(id);
+        console.log(generateSlug(id));
+        if (!isNaN(param)) {
+          data = await fetchPostById(id);
+        } else {
+          data = await fetchPostByTitle(id);
+        }
+        console.log(data);
+        if (data) {
+          setPost(data);
+        } else {
+          setError(true);
+        }
+      } catch (error) {
         console.error('Erro ao carregar post:', error);
-        setLoading(false); // Finaliza o carregamento mesmo em caso de erro
-      });
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPost();
   }, [id]);
 
   if (loading) {
@@ -26,6 +50,10 @@ export default function PostDetail() {
         <div className="loading-spinner"></div>
       </div>
     );
+  }
+
+  if (error || !post) {
+    return <NotFound />;
   }
 
   return (
