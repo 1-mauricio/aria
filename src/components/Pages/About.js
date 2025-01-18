@@ -1,12 +1,15 @@
 import React from 'react';
+import DonationSection from './DonationSection';
 
 export default function About() {
   return (
     <main className="about-container">
       <div className="about-header">
-        <h1>Sobre o Imprensa Malakoff</h1>
+        <h1>Sobre A ÁRIA</h1>
         <p>Bem-vindo ao <strong>Imprensa Malakoff</strong>, o seu lugar para reflexões profundas, análises detalhadas e histórias inspiradoras sobre design, tecnologia, ética e muito mais!</p>
       </div>
+
+      <DonationSection width="40%" />
       <section className="about-content">
         <h2>O Que Fazemos?</h2>
         <p>No <strong>Imprensa Malakoff</strong>, acreditamos no poder das palavras para inspirar mudanças e provocar discussões. Nosso objetivo é explorar as interseções entre tecnologia, ética, design e as questões sociais contemporâneas. Através de artigos, análises e estudos de caso, buscamos não apenas informar, mas também incentivar nossos leitores a pensar criticamente sobre o mundo ao seu redor.</p>

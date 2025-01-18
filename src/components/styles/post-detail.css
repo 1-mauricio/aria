@@ -36,7 +36,7 @@
 .post-meta span {
   background-color: var(--background-light-color);
   padding: 0.3rem 0.6rem;
-  border-radius: 0.3rem;
+  border-radius: var(--border-radius);
 }
 
 .post-category {
@@ -98,6 +98,43 @@
   height: 30px;
   animation: spin 1s linear infinite;
 }
+
+.related-posts {
+  margin-top: 40px;
+  padding: 20px;
+  background-color: var(--background-light-color);
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.related-posts h2 {
+  font-size: 24px;
+  color: var(--text-color);
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+.related-posts ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.related-posts li {
+  margin-bottom: 15px;
+}
+
+.related-posts a {
+  color: var(--accent-color);
+  text-decoration: none;
+  font-size: 18px;
+  transition: color 0.3s ease;
+}
+
+.related-posts a:hover {
+  color: var(--primary-hover-color);
+}
+
 
 @keyframes spin {
   0% {

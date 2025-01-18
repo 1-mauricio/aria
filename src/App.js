@@ -16,7 +16,6 @@ export default function App() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    // Carrega os posts ao montar o componente
     fetchPosts()
       .then(setPosts)
       .catch((error) => console.error('Erro ao carregar os posts:', error));

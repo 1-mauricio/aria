@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { fetchPostById, fetchPostByTitle } from "../../services/PostService";
+import { Link, useParams } from 'react-router-dom';
+import { fetchPostById, fetchPostByTitle, fetchPosts } from "../../services/PostService";
 import NotFound from '../Pages/NotFound';
+import DonationSection from '../Pages/DonationSection';
 
 export default function PostDetail() {
   const { id } = useParams(); 
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [recentPosts, setRecentPosts] = useState([]);
 
   function generateSlug(titulo) {
     return titulo.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
@@ -33,6 +35,10 @@ export default function PostDetail() {
         } else {
           setError(true);
         }
+
+        const recent = await fetchPosts();
+        recent.splice(0, 2);
+        setRecentPosts(recent);
       } catch (error) {
         console.error('Erro ao carregar post:', error);
         setError(true);
@@ -67,7 +73,26 @@ export default function PostDetail() {
           <span className="post-read-time">{post.readTime} min</span>
         </div>
       </header>
+
+      <DonationSection width='60%' />
+
       <div className="post-content" dangerouslySetInnerHTML={{ __html: post.content }}></div>
+
+      {recentPosts.length > 0 && (
+        <section className="related-posts">
+          <h2>Veja também nossos últimos posts</h2>
+          <ul>
+            {recentPosts.map(recentPost => (
+              <li key={recentPost.id}>
+                <Link to={`/post/${generateSlug(recentPost.title)}`}>
+                  {recentPost.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+)}
+
     </article>
   );
 }

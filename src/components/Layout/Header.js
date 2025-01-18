@@ -48,7 +48,7 @@ export default function Header() {
     <header className="header">
       <div className="header-content">
         <div className="left-section">
-          <Link to="/" className="site-title">Imprensa Malakoff</Link>
+          <Link to="/" className="site-title">A ÁRIA</Link>
         </div>
 
         <div className="right-section">

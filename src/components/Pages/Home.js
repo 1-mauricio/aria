@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PostItem from '../Posts/PostItem';
 import { Link } from 'react-router-dom';
 import { fetchPosts } from '../../services/PostService';
+import DonationSection from './DonationSection';
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -50,9 +51,9 @@ export default function Home() {
       {/* Hero Section */}
       <section className="hero-section">
         <div className="hero-text">
-          <h1>Bem-vindo ao Imprensa Malakoff</h1>
+          <h1>A ÁRIA</h1>
           <p>Fique por dentro das últimas notícias e tendências sobre design, tecnologia e ética na web.</p>
-          <Link to="/posts" className="cta-btn">Explorar Todos os Posts</Link> 
+          {/* <Link to="/posts" className="cta-btn">Explorar Todos os Posts</Link> */}
         </div>
       </section>
 
@@ -115,6 +116,7 @@ export default function Home() {
         </div>
       </section>
 
+          <DonationSection width='40%' />
     </main>
   );
 }

@@ -14,7 +14,7 @@ export default function Footer() {
             <a href="https://instagram.com/imprensamalakoff" target="_blank" rel="noopener noreferrer">Instagram</a>
           </div>
           <div className="footer-text">
-            © 2024 Imprensa Malakoff
+            © 2025. A ÁRIA. Todos os direitos reservados.
           </div>
         </div>
       </footer>

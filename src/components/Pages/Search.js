@@ -44,13 +44,19 @@ export default function Search() {
 
   if (error) {
     return (
-        <main className="not-found-container">
+      <main className="not-found-container">
         <div className="not-found-content">
-            <h1>404</h1>
-          <h2>Termo não encontrado</h2>
-          <p>O termo "{search}" não teve nenhum retorno.</p>
-
-          <Link to="/" className="home-button">Voltar para Home</Link>
+          <h1>Ops!</h1>
+          <h2>Nada encontrado</h2>
+          <p>Não encontramos resultados para "{search}". Aqui estão algumas sugestões:</p>
+          <ul>
+            <li>Verifique se há erros de digitação ou ortografia</li>
+            <li>Tente usar palavras-chave mais gerais</li>
+            <li>Experimente usar sinônimos</li>
+          </ul>
+          <p>Se ainda não encontrar o que procura, talvez o conteúdo não esteja disponível no momento.</p>
+          <Link to="/" className="home-button">Voltar para a Página Inicial</Link>
+        
         </div>
       </main>
     );

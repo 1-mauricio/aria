@@ -15,6 +15,7 @@ import './components/styles/post-detail.css';
 import './components/styles/post-item.css';
 import './components/styles/post-list.css';
 import './components/styles/subscribe.css';
+import './components/styles/donation-section.css';
 
 //import './components/styles/styles.css';
 
