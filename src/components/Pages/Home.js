@@ -1,122 +1,92 @@
-import React, { useEffect, useState } from 'react';
-import PostItem from '../Posts/PostItem';
-import { Link } from 'react-router-dom';
-import { fetchPosts } from '../../services/PostService';
-import DonationSection from './DonationSection';
+import React, { useEffect, useState } from "react";
+import PostItem from "../Posts/PostItem";
+import { fetchPosts } from "../../services/PostService";
+import DonationSection from "./DonationSection";
+import FeaturedPost from "../Posts/FeaturedPost";
+import MostViewedPosts from "../Posts/MostViewedPosts";
 
 export default function Home() {
-  const [loading, setLoading] = useState(true);
-  const [mostViewedWeek, setMostViewedWeek] = useState([]);
-  const [mostViewedMonth, setMostViewedMonth] = useState([]);
-  const [featuredPost, setfeaturedPost] = useState(null);
-  const [latestPosts, setlatestPosts] = useState([]);
+	const [loading, setLoading] = useState(true);
+	const [mostViewedWeek, setMostViewedWeek] = useState([]);
+	const [mostViewedMonth, setMostViewedMonth] = useState([]);
+	const [mostViewedAllTime, setMostViewedAllTime] = useState([]);
+	const [featuredPost, setfeaturedPost] = useState(null);
+	const [latestPosts, setlatestPosts] = useState([]);
 
-  useEffect(() => {
-    setLoading(true);
-    fetchPosts()
-      .then((data) => {
-        
-        setfeaturedPost(data.length > 0 ? data[0] : null);
+	useEffect(() => {
+		setLoading(true);
+		fetchPosts()
+			.then((data) => {
+				setfeaturedPost(data.length > 0 ? data[0] : null);
 
-        setlatestPosts(data)
+				setlatestPosts(data);
 
-        const sortedWeek = data
-          .sort((a, b) => b.viewsThisWeek - a.viewsThisWeek)
-          .slice(0, 3); 
-        setMostViewedWeek(sortedWeek);
+				const sortedWeek = data
+					.sort((a, b) => b.viewsThisWeek - a.viewsThisWeek)
+					.slice(0, 3);
+				setMostViewedWeek(sortedWeek);
 
-        const sortedMonth = data
-          .sort((a, b) => b.viewsThisMonth - a.viewsThisMonth)
-          .slice(0, 3); 
-        setMostViewedMonth(sortedMonth);
+				const sortedMonth = data
+					.sort((a, b) => b.viewsThisMonth - a.viewsThisMonth)
+					.slice(0, 3);
+				setMostViewedMonth(sortedMonth);
 
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error('Erro ao carregar posts:', error);
-        setLoading(false);
-      });
-  }, []);
+				const sortedAllTime = data
+					.sort((a, b) => b.viewsThisMonth - a.viewsThisMonth)
+					.slice(0, 3);
+				setMostViewedAllTime(sortedAllTime);
 
-  if (loading) {
-    return (
-      <div className="loading-container">
-        <div className="loading-spinner"></div>
-      </div>
-    );
-  }
+				setLoading(false);
+			})
+			.catch((error) => {
+				console.error("Erro ao carregar posts:", error);
+				setLoading(false);
+			});
+	}, []);
 
-  return (
-    <main className="home-container">
-      {/* Hero Section */}
-      <section className="hero-section">
-        <div className="hero-text">
-          <h1>A ÁRIA</h1>
-          <p>Fique por dentro das últimas notícias e tendências sobre design, tecnologia e ética na web.</p>
-          {/* <Link to="/posts" className="cta-btn">Explorar Todos os Posts</Link> */}
-        </div>
-      </section>
+	if (loading) {
+		return (
+			<div className="loading-container">
+				<div className="loading-spinner"></div>
+			</div>
+		);
+	}
 
-      {/* Featured Post */}
-      {featuredPost && (
-        <section className="featured-post">
-          <h2>Post em Destaque</h2>
-          <PostItem post={featuredPost} />
-          <Link to={`/post/${featuredPost.title}`} className="cta-btn ">Leia o post completo</Link>
-        </section>
-      )}
+	return (
+		<main className="home-container">
+			{/* Hero Section */}
+			<section className="hero-section">
+				<div className="hero-text">
+					<h1>A ÁRIA</h1>
+					<p>
+						Fique por dentro das últimas notícias e tendências sobre
+						design, tecnologia e ética na web.
+					</p>
+					{/* <Link to="/posts" className="cta-btn">Explorar Todos os Posts</Link> */}
+				</div>
+			</section>
 
-      <div className="most-viewed-container">
-        <div className="most-viewed-section">
-            <h2>Mais lidos da semana</h2>
-            <div className="most-viewed-list">
-            {mostViewedWeek.length ? (
-                mostViewedWeek.map((post, index) => (
-                <Link to={`/post/${post.title}`} key={post.id} className="most-viewed-item">
-                    <span className="most-viewed-number">{index + 1}</span>
-                    <div className="most-viewed-content">
-                    <h3>{post.title}</h3>
-                    <span className="most-viewed-date">{post.date}</span>
-                    </div>
-                </Link>
-                ))
-            ) : (
-                <p>Nenhum post visualizado esta semana.</p>
-            )}
-            </div>
-        </div>
+			{/* Featured Post */}
+			<FeaturedPost featuredPost={featuredPost} />
 
-        <div className="most-viewed-section">
-            <h2>Mais lidos do mês</h2>
-            <div className="most-viewed-list">
-            {mostViewedMonth.length ? (
-                mostViewedMonth.map((post, index) => (
-                <Link to={`/post/${post.title}`} key={post.id} className="most-viewed-item">
-                    <span className="most-viewed-number">{index + 1}</span>
-                    <div className="most-viewed-content">
-                    <h3>{post.title}</h3>
-                    <span className="most-viewed-date">{post.date}</span>
-                    </div>
-                </Link>
-                ))
-            ) : (
-                <p>Nenhum post visualizado este mês.</p>
-            )}
-            </div>
-        </div>
-      </div>
+			{/* Most Viewed Posts */}
+			<h2>Posts Mais Vistos</h2>
+			<MostViewedPosts
+				mostViewedWeek={mostViewedWeek}
+				mostViewedMonth={mostViewedMonth}
+			/>
 
-      {/* Latest Posts */}
-      <section className="latest-posts">
-        <h2>Últimos Posts</h2>
-        <div className="posts-list">
-          {latestPosts.slice(0, 3).map(post => (
-            <PostItem key={post.id} post={post} />
-          ))}
-        </div>
-      </section>
+			{/* Latest Posts */}
+			<section className="latest-posts">
+				<h2>Últimos Posts</h2>
+				<div className="posts-list">
+					{latestPosts.slice(0, 3).map((post) => (
+						<PostItem key={post.id} post={post} />
+					))}
+				</div>
+			</section>
 
-          <DonationSection width='40%' />
-    </main>
-  );
+			<DonationSection width="40%" />
+		</main>
+	);
 }
