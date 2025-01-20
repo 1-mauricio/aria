@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import "../styles/most-viewed-posts.css";
 
 const MostViewedPosts = ({ mostViewedWeek, mostViewedMonth }) => {
 	const [activeTab, setActiveTab] = useState("week");

@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import DonationSection from "./DonationSection";
+import CONFIG from "../../CONFIG";
+import "../styles/about.css";
 
 export default function About() {
+	useEffect(() => {
+		document.title = "Sobre - " + CONFIG.siteName;
+	} , []);
+
 	return (
 		<main className="about-container">
 			<div className="about-header">
-				<h1>Sobre A ÁRIA</h1>
+				<h1>Sobre {CONFIG.siteName}</h1>
 				<p>
-					Bem-vindo ao <strong>Imprensa Malakoff</strong>, o seu lugar
+					Bem-vindo <strong>{CONFIG.siteName}</strong>, o seu lugar
 					para reflexões profundas, análises detalhadas e histórias
 					inspiradoras sobre design, tecnologia, ética e muito mais!
 				</p>
@@ -17,7 +23,7 @@ export default function About() {
 			<section className="about-content">
 				<h2>O Que Fazemos?</h2>
 				<p>
-					No <strong>Imprensa Malakoff</strong>, acreditamos no poder
+					No <strong>{CONFIG.siteName}</strong>, acreditamos no poder
 					das palavras para inspirar mudanças e provocar discussões.
 					Nosso objetivo é explorar as interseções entre tecnologia,
 					ética, design e as questões sociais contemporâneas. Através

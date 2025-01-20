@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
+import "../styles/donate.css";
 
 export default function Donate() {
+	useEffect(() => {
+		document.title = "Apoie - A Ária";
+	} , []);
+
 	return (
 		<main className="donate-container">
 			<section className="donate-header">

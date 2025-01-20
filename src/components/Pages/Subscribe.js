@@ -1,5 +1,5 @@
-// src/components/Pages/Subscribe.js
 import React, { useState } from "react";
+import "../styles/subscribe.css";
 
 export default function Subscribe() {
 	const [formData, setFormData] = useState({
@@ -10,7 +10,6 @@ export default function Subscribe() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		// Lógica para processar a inscrição
 		console.log("Form submitted:", formData);
 	};
 

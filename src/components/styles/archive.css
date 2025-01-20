@@ -1,3 +1,9 @@
+.archive-container {
+	margin: 2rem 6rem !important;
+	padding: 0 20px;
+	max-width: 1200px;
+}
+
 .archive-header {
 	margin-bottom: 30px;
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "../styles/featured-post.css";
 
 export default function FeaturedPost({ featuredPost }) {
 	if (!featuredPost) return null;

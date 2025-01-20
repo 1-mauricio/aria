@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
-	fetchPostByCustomLink,
 	fetchPostById,
-	fetchPosts,
 } from "../../services/PostService";
 import NotFound from "../Pages/NotFound";
 import DonationSection from "../Pages/DonationSection";
+import PostInteractions from "../Pages/PostInteractions";
+import "../styles/post-detail.css";
 
-export default function PostDetail() {
+export default function PostDetail({ posts = [] }) {
 	const { id } = useParams();
 	const [post, setPost] = useState(null);
 	const [loading, setLoading] = useState(true);
@@ -19,39 +19,23 @@ export default function PostDetail() {
 		setLoading(true);
 		setError(false);
 
-		const fetchPost = async () => {
-			try {
-				let data;
-				const param = parseInt(id);
-				if (!isNaN(param)) {
-					data = await fetchPostById(id);
-				} else {
-					data = await fetchPostByCustomLink(id);
-				}
-				if (data) {
-					setPost(data);
-				} else {
-					setError(true);
-				}
+		const findPost =
+			posts.find((post) => post.customLink === id) ||
+			posts.find((post) => post.id === parseInt(id));
 
-				fetchPosts()
-					.then((recent) => {
-						setRecentPosts(recent.slice(0, 3));
-					})
-					.catch((error) => {
-						console.error("Erro ao carregar posts:", error);
-					});
-					
-			} catch (error) {
-				console.error("Erro ao carregar post:", error);
-				setError(true);
-			} finally {
-				setLoading(false);
-			}
-		};
+		if (findPost) {
+			document.title = `${findPost.title} - A Ária`;
+			setPost(findPost);
+			setLoading(false);
 
-		fetchPost();
-	}, [id]);
+			const recents = posts.filter((post) => post.id !== findPost.id);
+			setRecentPosts(recents.slice(0, 3));
+
+			fetchPostById(findPost.id);
+
+			return;
+		}
+	}, [id, posts]);
 
 	if (loading) {
 		return (
@@ -73,10 +57,33 @@ export default function PostDetail() {
 					<p className="post-subtitle">{post.subTitle}</p>
 				</em>
 				<div className="post-meta">
-					<span className="post-category">{post.category}</span>
+					<a
+						href={"/posts/" + post.category}
+						className="post-category"
+					>
+						{post.category}
+					</a>
 					<span className="post-date">{post.date}</span>
 					<span className="post-read-time">{post.readTime} min</span>
 				</div>
+
+				<PostInteractions
+					postId={post.id}
+					title={post.title}
+					customLink={post.customLink}
+				/>
+
+				{post.imageUrl && (
+					<div className="post-image-container">
+						<div className="post-image-wrapper">
+							<img
+								src={post.imageUrl}
+								alt={post.title}
+								className="post-image"
+							/>
+						</div>
+					</div>
+				)}
 			</header>
 
 			<DonationSection width="60%" />

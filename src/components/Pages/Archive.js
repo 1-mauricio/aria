@@ -1,48 +1,62 @@
 import React, { useEffect, useState } from "react";
 import PostList from "../Posts/PostList";
-import { fetchPosts } from "../../services/PostService";
 import { useParams } from "react-router-dom";
+import "../styles/archive.css";
+import { useNavigate } from "react-router-dom";
 
-export default function Archive() {
+export default function Archive({ data = [] }) {
 	const { category: routeCategory } = useParams();
-	const [posts, setPosts] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [categories, setCategories] = useState([]);
-	const [selectedCategory, setSelectedCategory] = useState(routeCategory?.toLowerCase() || "all");
+	const [selectedCategory, setSelectedCategory] = useState(
+		routeCategory?.toLowerCase() || "all"
+	);
 	const [filteredPosts, setFilteredPosts] = useState([]);
+	const [postListJSX, setPostListJSX] = useState(null);
 
-	// Carregar posts e categorias ao montar o componente
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		const uniqueCategories = [
+			...new Set(data.map((post) => post.category?.toLowerCase())),
+		].filter(Boolean);
+
+		setCategories(uniqueCategories);
+	}, [data]);
+
 	useEffect(() => {
 		setLoading(true);
-		fetchPosts()
-			.then((data) => {
-				setPosts(data);
+		const updatedPosts =
+			selectedCategory === "all"
+				? data
+				: data.filter(
+						(post) =>
+							post.category &&
+							post.category.toLowerCase() === selectedCategory
+				  );
 
-				// Extrair categorias únicas (ignorar case)
-				const uniqueCategories = [
-					...new Set(data.map((post) => post.category?.toLowerCase())),
-				].filter(Boolean);
+		setFilteredPosts(updatedPosts);
 
-				setCategories(uniqueCategories);
-				setFilteredPosts(
-					data.filter((post) =>
-						selectedCategory === "all"
-							? true
-							: post.category?.toLowerCase() === selectedCategory
-					)
-				);
-			})
-			.catch((error) => {
-				console.error("Erro ao carregar posts:", error);
-			})
-			.finally(() => {
-				setLoading(false);
-			});
-	}, [selectedCategory]);
+		const jsx = <PostList key={selectedCategory} postsList={updatedPosts} />;
+		setPostListJSX(jsx);
 
-	// Atualizar a categoria selecionada
+		setLoading(false);
+	}, [data, selectedCategory]);
+
+	useEffect(() => {
+		if (routeCategory) {
+			setSelectedCategory(routeCategory.toLowerCase());
+		}
+	}, [routeCategory]);
+
+
 	const handleCategoryChange = (category) => {
 		setSelectedCategory(category.toLowerCase());
+		if (category === "all") {
+			navigate(`/posts`);
+			return;
+		}
+		navigate(`/posts/${category.toLowerCase()}`);
 	};
 
 	if (loading) {
@@ -51,10 +65,6 @@ export default function Archive() {
 				<div className="loading-spinner"></div>
 			</div>
 		);
-	}
-
-	if (!Array.isArray(posts) || posts.length === 0) {
-		return <p>Nenhum post encontrado.</p>;
 	}
 
 	return (
@@ -79,7 +89,9 @@ export default function Archive() {
 										? "active"
 										: ""
 								}`}
-								onClick={() => handleCategoryChange(category)}
+								onClick={() =>
+									handleCategoryChange(category)
+								}
 							>
 								{category}
 							</button>
@@ -87,7 +99,9 @@ export default function Archive() {
 					</div>
 				</div>
 			</div>
-			<PostList postsList={filteredPosts} />
+			<div className="filtered-posts">
+				{postListJSX}
+			</div>
 		</main>
 	);
 }

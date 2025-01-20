@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import "../styles/header.css";
+import CONFIG from "../../CONFIG";
 
 export default function Header() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -51,7 +53,7 @@ export default function Header() {
 			<div className="header-content">
 				<div className="left-section">
 					<Link to="/" className="site-title">
-						A ÁRIA
+						{CONFIG.siteName}
 					</Link>
 				</div>
 

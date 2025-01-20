@@ -1,38 +1,39 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { searchPost } from "../../services/PostService";
+import "../styles/not-found.css";
 import PostList from "../Posts/PostList";
 
-export default function Search() {
-	const [posts, setPosts] = useState([]);
+export default function Search({ data = [] }) {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const [search, setSearch] = useState(null);
+	const [postListJSX, setPostListJSX] = useState(null);
 	const location = useLocation();
 
 	useEffect(() => {
 		const queryParams = new URLSearchParams(location.search);
 		const searchTerm = queryParams.get("searchTerm");
 
+		console.log(searchTerm)
+
 		if (searchTerm) {
 			setLoading(true);
 			setError(null);
 			setSearch(searchTerm);
-			searchPost(searchTerm)
-				.then((data) => {
-					setPosts(data);
-					setLoading(false);
-				})
-				.catch((err) => {
-					console.error(err);
-					setError("Erro ao buscar posts");
-					setLoading(false);
-				});
-		} else {
-			setPosts([]);
-			setLoading(false);
+
+			const result = searchPost(searchTerm, data);
+
+			if (result.length > 0) {
+				const jsx = <PostList key={search} postsList={result} />
+				setPostListJSX(jsx);
+				setLoading(false);
+			} else {
+				setError("Erro ao buscar posts");
+				setLoading(false);
+			}
 		}
-	}, [location.search]);
+	}, [location.search, data]);
 
 	if (loading) {
 		return (
@@ -53,9 +54,7 @@ export default function Search() {
 						algumas sugestões:
 					</p>
 					<ul>
-						<li>
-							Verifique se há erros de digitação ou ortografia
-						</li>
+						<li>Verifique se há erros de digitação ou ortografia</li>
 						<li>Tente usar palavras-chave mais gerais</li>
 						<li>Experimente usar sinônimos</li>
 					</ul>
@@ -73,8 +72,8 @@ export default function Search() {
 
 	return (
 		<main className="archive-container">
-			<h1>Resultado</h1>
-			<PostList postsList={posts} />
+			<h1>Resultado para: {search}</h1>
+			<div className="filtered-posts">{postListJSX}</div>
 		</main>
 	);
 }

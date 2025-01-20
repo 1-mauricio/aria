@@ -1,5 +1,6 @@
-const API_URL = 'https://imprensamalakoff-backend.onrender.com/api/posts';
-//const API_URL = "http://localhost:8080/api/posts";
+import CONFIG from "../CONFIG";
+
+const API_URL = CONFIG.apiUrl + "/api/posts";
 
 const formatDate = (dateString) => {
 	const date = new Date(dateString);
@@ -42,16 +43,33 @@ export const fetchPostById = async (id) => {
 	return post;
 };
 
-export const searchPost = async (searchTerm) => {
-	const response = await fetch(`${API_URL}/search?searchTerm=${searchTerm}`);
-	console.log(response);
-	if (!response.ok) throw new Error("Erro ao buscar post");
-	const posts = await response.json();
+export const searchPost = (searchTerm, posts) => {
+	if (!searchTerm) return posts;
 
-	const formattedPosts = posts.map((post) => ({
-		...post,
-		date: formatDate(post.date),
-	}));
+	const normalizedTerm = searchTerm.toLowerCase().trim();
+	const terms = normalizedTerm.split(" ").filter((term) => term.length > 2);
 
-	return formattedPosts;
+	return posts
+		.map((post) => {
+			let score = 0;
+
+			if (post.title?.toLowerCase().includes(normalizedTerm)) score += 10;
+			if (post.subTitle?.toLowerCase().includes(normalizedTerm))
+				score += 5;
+			if (post.category?.toLowerCase().includes(normalizedTerm))
+				score += 3;
+			if (post.content?.toLowerCase().includes(normalizedTerm))
+				score += 1;
+
+			terms.forEach((term) => {
+				if (post.title?.toLowerCase().includes(term)) score += 5;
+				if (post.subTitle?.toLowerCase().includes(term)) score += 3;
+				if (post.category?.toLowerCase().includes(term)) score += 2;
+				if (post.content?.toLowerCase().includes(term)) score += 0.5;
+			});
+
+			return { ...post, searchScore: score };
+		})
+		.filter((post) => post.searchScore > 0)
+		.sort((a, b) => b.searchScore - a.searchScore);
 };

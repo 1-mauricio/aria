@@ -1,4 +1,6 @@
 import React from "react";
+import "../styles/footer.css";
+import CONFIG from "../../CONFIG";
 
 export default function Footer() {
 	return (
@@ -10,23 +12,19 @@ export default function Footer() {
 					<a href="/inscreva-se">Newsletter</a>
 				</div>
 				<div className="footer-social">
-					<a
-						href="https://twitter.com/imprensamalakoff"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Twitter
-					</a>
-					<a
-						href="https://instagram.com/imprensamalakoff"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Instagram
-					</a>
+					{Object.entries(CONFIG.socialMedia).map(([key, url]) => (
+						<a
+							key={key}
+							href={url}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							{key.charAt(0).toUpperCase() + key.slice(1)}
+						</a>
+					))}
 				</div>
 				<div className="footer-text">
-					© 2025. A ÁRIA. Todos os direitos reservados.
+					© 2025. {CONFIG.siteName}. Todos os direitos reservados.
 				</div>
 			</div>
 		</footer>

@@ -1,4 +1,5 @@
 import React from "react";
+import "../styles/donation-section.css";
 
 const DonationSection = ({ width = "50%" }) => {
 	return (

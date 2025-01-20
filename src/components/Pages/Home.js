@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import PostItem from "../Posts/PostItem";
-import { fetchPosts } from "../../services/PostService";
 import DonationSection from "./DonationSection";
 import FeaturedPost from "../Posts/FeaturedPost";
 import MostViewedPosts from "../Posts/MostViewedPosts";
+import "../styles/home.css";
+import CONFIG from "../../CONFIG";
 
-export default function Home() {
+export default function Home({ posts = [] }) {
 	const [loading, setLoading] = useState(true);
 	const [mostViewedWeek, setMostViewedWeek] = useState([]);
 	const [mostViewedMonth, setMostViewedMonth] = useState([]);
@@ -15,33 +16,36 @@ export default function Home() {
 
 	useEffect(() => {
 		setLoading(true);
-		fetchPosts()
-			.then((data) => {
-				setfeaturedPost(data.length > 0 ? data[0] : null);
+		if (posts.length > 0) {
+			const featuredId = CONFIG.featuredPost;
 
-				setlatestPosts(data);
+			const featuredPost = posts.find((post) => post.id === featuredId);
 
-				const sortedWeek = data
-					.sort((a, b) => b.viewsThisWeek - a.viewsThisWeek)
-					.slice(0, 3);
-				setMostViewedWeek(sortedWeek);
+			if (featuredPost) {
+				setfeaturedPost(featuredPost);
+			} else {
+				setfeaturedPost(posts.length > 0 ? posts[0] : null);
+			}
 
-				const sortedMonth = data
-					.sort((a, b) => b.viewsThisMonth - a.viewsThisMonth)
-					.slice(0, 3);
-				setMostViewedMonth(sortedMonth);
+			setlatestPosts(posts);
 
-				const sortedAllTime = data
-					.sort((a, b) => b.viewsThisMonth - a.viewsThisMonth)
-					.slice(0, 3);
-				setMostViewedAllTime(sortedAllTime);
+			const sortedWeek = posts
+				.sort((a, b) => b.viewsThisWeek - a.viewsThisWeek)
+				.slice(0, 3);
+			setMostViewedWeek(sortedWeek);
 
-				setLoading(false);
-			})
-			.catch((error) => {
-				console.error("Erro ao carregar posts:", error);
-				setLoading(false);
-			});
+			const sortedMonth = posts
+				.sort((a, b) => b.viewsThisMonth - a.viewsThisMonth)
+				.slice(0, 3);
+			setMostViewedMonth(sortedMonth);
+
+			const sortedAllTime = posts
+				.sort((a, b) => b.viewsThisMonth - a.viewsThisMonth)
+				.slice(0, 3);
+			setMostViewedAllTime(sortedAllTime);
+
+			setLoading(false);
+		}
 	}, []);
 
 	if (loading) {
@@ -57,11 +61,8 @@ export default function Home() {
 			{/* Hero Section */}
 			<section className="hero-section">
 				<div className="hero-text">
-					<h1>A ÁRIA</h1>
-					<p>
-						Fique por dentro das últimas notícias e tendências sobre
-						design, tecnologia e ética na web.
-					</p>
+					<h1>{CONFIG.siteName}</h1>
+					<p>{CONFIG.siteDescription}</p>
 					{/* <Link to="/posts" className="cta-btn">Explorar Todos os Posts</Link> */}
 				</div>
 			</section>
