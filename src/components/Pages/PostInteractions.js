@@ -1,14 +1,39 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../styles/post-interactions.css";
+import { likePost, unlikePost } from "../../services/PostService";
 
-const PostInteractions = ({ postId, title, customLink }) => {
+const PostInteractions = ({ post }) => {
 	const [liked, setLiked] = useState(false);
+	const [postLikes, setPostLikes] = useState(post.likes)
+
+	useEffect(() => {
+		const storedLiked = localStorage.getItem(`liked_${post.id}`);
+		if (storedLiked === "true") {
+			setLiked(true);
+		}
+	}, [post.id]);
+
+	const handleLike = async () => {
+		const newLiked = !liked;
+		setLiked(newLiked);
+
+		if (newLiked) {
+			likePost(post); 
+			setPostLikes(postLikes + 1);
+		} else {
+			unlikePost(post);
+			setPostLikes(postLikes - 1);
+		}
+
+		localStorage.setItem(`liked_${post.id}`, newLiked.toString());
+
+	};
 
 	const handleShare = async () => {
 		try {
 			await navigator.share({
-				title: title,
-				url: `${window.location.origin}/p/${customLink}`,
+				title: post.title,
+				url: `${window.location.origin}/p/${post.customLink}`,
 			});
 		} catch (error) {
 			console.error("Erro ao compartilhar:", error);
@@ -20,7 +45,7 @@ const PostInteractions = ({ postId, title, customLink }) => {
 			<div className="tab-navigation">
 				<button
 					className={`tab-button ${liked ? "active" : ""}`}
-					onClick={() => setLiked(!liked)}
+					onClick={handleLike}
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +58,7 @@ const PostInteractions = ({ postId, title, customLink }) => {
 					>
 						<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
 					</svg>
-					Curtir
+					Curtir ({postLikes})
 				</button>
 				<button className="tab-button" onClick={handleShare}>
 					<svg

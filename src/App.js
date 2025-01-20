@@ -45,6 +45,7 @@ export default function App() {
 					);
 				}
 			} catch (err) {
+				console.log(err)
 				setError("Erro ao carregar posts.");
 			} finally {
 				setLoading(false);

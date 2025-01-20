@@ -43,6 +43,41 @@ export const fetchPostById = async (id) => {
 	return post;
 };
 
+export const likePost = async (post) => {
+	const {id} = post;
+	const response = await fetch(`${API_URL}/${id}/like`, {
+		method: "POST",
+	  });
+	  
+	  if (!response.ok) throw new Error("Erro ao curtir post");
+	  
+	  post.likes += 1;
+	updatePostInCache(post);
+
+	  return true; 
+};
+
+export const unlikePost = async (post) => {
+	const {id} = post;
+	const response = await fetch(`${API_URL}/${id}/unlike`, {
+		method: "POST",
+	});
+	if (!response.ok) throw new Error("Erro ao curtir post");
+
+	post.likes -= 1;
+	updatePostInCache(post);
+	
+	return true; 
+};
+
+const updatePostInCache = (updatedPost) => {
+	const cachedPosts = JSON.parse(localStorage.getItem("cached_posts"));
+	const updatedCache = cachedPosts.map((post) =>
+		post.id === updatedPost.id ? updatedPost : post
+	);
+	localStorage.setItem("cached_posts", JSON.stringify(updatedCache));
+};
+
 export const searchPost = (searchTerm, posts) => {
 	if (!searchTerm) return posts;
 

@@ -68,9 +68,7 @@ export default function PostDetail({ posts = [] }) {
 				</div>
 
 				<PostInteractions
-					postId={post.id}
-					title={post.title}
-					customLink={post.customLink}
+					post={post}
 				/>
 
 				{post.imageUrl && (
