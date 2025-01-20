@@ -47,7 +47,7 @@
 .donate-button {
 	width: 100%;
 	background-color: var(--primary-color);
-	color: var(--background-color);
+	color: var(--button-text);
 	padding: 12px 24px;
 	border: none;
 	border-radius: 4px;

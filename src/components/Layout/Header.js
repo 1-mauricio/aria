@@ -130,11 +130,21 @@ export default function Header() {
 							</svg>
 						</button>
 					</form>
-					<Link to="/">Home</Link>
-					<Link to="/posts">Posts</Link>
-					<Link to="/sobre">Sobre</Link>
+					<Link to="/" onClick={() => setIsMenuOpen(false)}>
+						Home
+					</Link>
+					<Link to="/posts" onClick={() => setIsMenuOpen(false)}>
+						Posts
+					</Link>
+					<Link to="/sobre" onClick={() => setIsMenuOpen(false)}>
+						Sobre
+					</Link>
 					<div className="action-buttons">
-						<Link to="/doe" className="subscribe-button">
+						<Link
+							to="/doe"
+							className="subscribe-button"
+							onClick={() => setIsMenuOpen(false)}
+						>
 							Apoie
 						</Link>
 					</div>

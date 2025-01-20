@@ -43,8 +43,8 @@
 }
 
 .tab-button.active {
-	background-color: var(--background-color);
-	color: var(--text-color);
+	background-color: var(--primary-color);
+	color: #cbc3b1;
 	box-shadow: 0 1px 3px var(--shadow-color);
 }
 
@@ -56,5 +56,12 @@
 	.tab-button {
 		padding: 4px 10px;
 		font-size: 12px;
+	}
+
+	.archive-container {
+		margin: 0 !important;
+		margin-top: 1rem !important;
+		padding: 0 20px;
+		max-width: 1200px;
 	}
 }

@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { searchPost } from "../../services/PostService";
 import "../styles/not-found.css";
 import PostList from "../Posts/PostList";
+import CONFIG from "../../CONFIG";
 
 export default function Search({ data = [] }) {
 	const [loading, setLoading] = useState(true);
@@ -10,6 +11,8 @@ export default function Search({ data = [] }) {
 	const [search, setSearch] = useState(null);
 	const [postListJSX, setPostListJSX] = useState(null);
 	const location = useLocation();
+
+	document.title = "Sobre - " + CONFIG.siteName;
 
 	useEffect(() => {
 		const queryParams = new URLSearchParams(location.search);

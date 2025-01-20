@@ -3,6 +3,7 @@ import PostList from "../Posts/PostList";
 import { useParams } from "react-router-dom";
 import "../styles/archive.css";
 import { useNavigate } from "react-router-dom";
+import CONFIG from "../../CONFIG";
 
 export default function Archive({ data = [] }) {
 	const { category: routeCategory } = useParams();
@@ -15,6 +16,8 @@ export default function Archive({ data = [] }) {
 	const [postListJSX, setPostListJSX] = useState(null);
 
 	const navigate = useNavigate();
+
+	document.title = "Posts - " + CONFIG.siteName;
 
 	useEffect(() => {
 		const uniqueCategories = [

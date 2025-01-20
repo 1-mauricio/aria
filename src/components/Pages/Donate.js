@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import "../styles/donate.css";
+import CONFIG from "../../CONFIG";
 
 export default function Donate() {
 	useEffect(() => {
-		document.title = "Apoie - A Ária";
+		document.title = "Apoie - " + CONFIG.siteName;
 	} , []);
 
 	return (

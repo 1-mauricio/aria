@@ -16,6 +16,8 @@ export default function Home({ posts = [] }) {
 
 	useEffect(() => {
 		setLoading(true);
+		document.title = "Home - " + CONFIG.siteName;
+
 		if (posts.length > 0) {
 			const featuredId = CONFIG.featuredPost;
 

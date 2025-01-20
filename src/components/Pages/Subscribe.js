@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import "../styles/subscribe.css";
+import CONFIG from "../../CONFIG";
 
 export default function Subscribe() {
+	document.title = "Inscreva-se - " + CONFIG.siteName;
+
 	const [formData, setFormData] = useState({
 		name: "",
 		email: "",
