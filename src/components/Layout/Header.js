@@ -53,7 +53,7 @@ export default function Header() {
 			<div className="header-content">
 				<div className="left-section">
 					<Link to="/" className="site-title">
-						{CONFIG.siteName}
+						<img className="logo-img" src="/assets/logo-crop.gif" />
 					</Link>
 				</div>
 

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap');
+
 :root {
 	--border-radius: 8px;
 
@@ -42,6 +44,14 @@
 	--shadow-color: rgba(0, 0, 0, 0.5);
 }
 
+@font-face {
+	font-family: "Giaza";
+	src: url("/public/assets/Giaza.otf") format("opentype");
+	font-style: normal;
+	font-weight: normal;
+  }
+  
+
 * {
 	margin: 0;
 	padding: 0;
@@ -60,8 +70,7 @@ body,
 }
 
 body {
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-		sans-serif;
+	font-family: "Lexend Deca", serif;
 	color: var(--text-color);
 	background-color: var(--background-color);
 	padding-top: 70px;

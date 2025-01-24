@@ -143,6 +143,14 @@ nav a {
 	color: var(--icon-color, #000);
 }
 
+.logo-img {
+	max-width: 100%; /* Não ultrapassa o tamanho do container */
+	height: auto; /* Mantém a proporção */
+	width: 70px; /* Tamanho fixo opcional */
+	display: block; /* Remove espaços indesejados ao redor do GIF */
+	margin: 0 auto; /* Centraliza o GIF no container */
+  }
+
 [data-theme="dark"] .search-icon {
 	color: #fff;
 }
@@ -151,6 +159,11 @@ nav a {
 	.header-content {
 		flex-wrap: wrap;
 		justify-content: space-between;
+	}
+
+	.logo-img {
+		width: 50px;
+		
 	}
 
 	.left-section {

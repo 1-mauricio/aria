@@ -63,7 +63,11 @@ export default function Home({ posts = [] }) {
 			{/* Hero Section */}
 			<section className="hero-section">
 				<div className="hero-text">
-					<h1>{CONFIG.siteName}</h1>
+						
+					<div className="hero-logo">
+						<h1>a ári</h1>
+						<img className="logo-img" src="/assets/logo-crop.gif" />
+						</div>
 					<p>{CONFIG.siteDescription}</p>
 					{/* <Link to="/posts" className="cta-btn">Explorar Todos os Posts</Link> */}
 				</div>

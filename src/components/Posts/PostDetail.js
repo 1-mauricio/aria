@@ -13,6 +13,7 @@ export default function PostDetail({ posts = [] }) {
 	const [post, setPost] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
+	const [viewsUpdated, setViewsUpdated] = useState(false);
 	const [recentPosts, setRecentPosts] = useState([]);
 
 	useEffect(() => {
@@ -28,14 +29,27 @@ export default function PostDetail({ posts = [] }) {
 			setPost(findPost);
 			setLoading(false);
 
+			console.log(viewsUpdated)
+
+			if (!viewsUpdated) {
+				console.log("entrou")
+				fetchPostById(findPost.id)
+					.then(() => {
+						setViewsUpdated(true);
+			console.log(viewsUpdated)
+
+					})
+					.catch(() => {
+						console.error("Erro ao atualizar as views.");
+					});
+			}
+
 			const recents = posts.filter((post) => post.id !== findPost.id);
 			setRecentPosts(recents.slice(0, 3));
 
-			fetchPostById(findPost.id);
-
 			return;
 		}
-	}, [id, posts]);
+	}, []);
 
 	if (loading) {
 		return (
@@ -104,7 +118,7 @@ export default function PostDetail({ posts = [] }) {
 						))}
 					</ul>
 				</section>
-			)}
+			)}			
 		</article>
 	);
 }
