@@ -12,7 +12,8 @@ export default function Search({ data = [] }) {
 	const [postListJSX, setPostListJSX] = useState(null);
 	const location = useLocation();
 
-	document.title = "Sobre - " + CONFIG.siteName;
+	document.title = "Pesquisa - " + CONFIG.siteName;
+	window.scrollTo(0, 0);
 
 	useEffect(() => {
 		const queryParams = new URLSearchParams(location.search);
@@ -73,7 +74,8 @@ export default function Search({ data = [] }) {
 
 	return (
 		<main className="archive-container">
-			<h1>Resultado para: {search}</h1>
+			<h1>Resultado(s) para:</h1>
+			<h2 style={{marginLeft: "1rem"}}>{search}</h2>
 			<div className="filtered-posts">{postListJSX}</div>
 		</main>
 	);

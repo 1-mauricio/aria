@@ -7,7 +7,7 @@
 	border-bottom: 0.1px solid var(--border-color);
 	padding: 16px 20px;
 	z-index: 1000;
-	transition: all 0.3s ease-in-out;
+	transition: padding 0.3s ease, height 0.3s ease;
 }
 
 .header.collapsed {
@@ -143,6 +143,11 @@ nav a {
 	box-shadow: 0 0 4px var(--primary-color);
 }
 
+.search-input.collapsed {
+	opacity: 0;
+	display: none;
+}
+
 .search-button {
 	background: none;
 	border: none;
@@ -232,7 +237,8 @@ nav a {
 	}
 
 	.theme-button {
-		margin-right: 0.5rem;
+		margin: 0;
+		padding: 0;
 	}
 
 	.nav-menu.active {

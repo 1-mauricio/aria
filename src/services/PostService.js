@@ -55,23 +55,22 @@ export const fetchPostById = async (id, updateViewsCount = false) => {
 	}
 };
 
-
 export const likePost = async (post) => {
-	const {id} = post;
+	const { id } = post;
 	const response = await fetch(`${API_URL}/${id}/like`, {
 		method: "POST",
-	  });
-	  
-	  if (!response.ok) throw new Error("Erro ao curtir post");
-	  
-	  post.likes += 1;
+	});
+
+	if (!response.ok) throw new Error("Erro ao curtir post");
+
+	post.likes += 1;
 	updatePostInCache(post);
 
-	  return true; 
+	return true;
 };
 
 export const unlikePost = async (post) => {
-	const {id} = post;
+	const { id } = post;
 	const response = await fetch(`${API_URL}/${id}/unlike`, {
 		method: "POST",
 	});
@@ -79,8 +78,8 @@ export const unlikePost = async (post) => {
 
 	post.likes -= 1;
 	updatePostInCache(post);
-	
-	return true; 
+
+	return true;
 };
 
 const updatePostInCache = (updatedPost) => {
@@ -90,6 +89,32 @@ const updatePostInCache = (updatedPost) => {
 	);
 	localStorage.setItem("cached_posts", JSON.stringify(updatedCache));
 };
+
+const levenshteinDistance = (a, b) => {
+	const matrix = Array.from({ length: a.length + 1 }, (_, i) =>
+		Array.from({ length: b.length + 1 }, (_, j) =>
+			i === 0 ? j : j === 0 ? i : 0
+		)
+	);
+
+	for (let i = 1; i <= a.length; i++) {
+		for (let j = 1; j <= b.length; j++) {
+			matrix[i][j] =
+				a[i - 1] === b[j - 1]
+					? matrix[i - 1][j - 1]
+					: Math.min(
+							matrix[i - 1][j],
+							matrix[i][j - 1],
+							matrix[i - 1][j - 1]
+					  ) + 1;
+		}
+	}
+
+	return matrix[a.length][b.length];
+};
+
+const isSimilar = (term, word, maxDistance = 2) =>
+	levenshteinDistance(term, word) <= maxDistance;
 
 export const searchPost = (searchTerm, posts) => {
 	if (!searchTerm) return posts;
@@ -101,19 +126,20 @@ export const searchPost = (searchTerm, posts) => {
 		.map((post) => {
 			let score = 0;
 
-			if (post.title?.toLowerCase().includes(normalizedTerm)) score += 10;
-			if (post.subTitle?.toLowerCase().includes(normalizedTerm))
-				score += 5;
-			if (post.category?.toLowerCase().includes(normalizedTerm))
-				score += 3;
-			if (post.content?.toLowerCase().includes(normalizedTerm))
-				score += 1;
+			const fields = ["title", "subTitle", "category", "content"];
 
-			terms.forEach((term) => {
-				if (post.title?.toLowerCase().includes(term)) score += 5;
-				if (post.subTitle?.toLowerCase().includes(term)) score += 3;
-				if (post.category?.toLowerCase().includes(term)) score += 2;
-				if (post.content?.toLowerCase().includes(term)) score += 0.5;
+			fields.forEach((field) => {
+				const fieldContent = post[field]?.toLowerCase() || "";
+
+				if (fieldContent.includes(normalizedTerm)) score += 10;
+
+				fieldContent.split(" ").forEach((word) => {
+					terms.forEach((term) => {
+						if (isSimilar(term, word)) {
+							score += 5;
+						}
+					});
+				});
 			});
 
 			return { ...post, searchScore: score };

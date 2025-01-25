@@ -4,22 +4,22 @@ import "../styles/post-item.css";
 
 export default function PostItem({ post }) {
 	return (
-		<article className="post-item">
-			<div className="post-item-content">
-				<div className="post-category">{post.category}</div>
-				<Link to={`/p/${post.customLink}`} className="post-item-link">
+		<Link to={`/p/${post.customLink}`} className="post-item-link">
+			<article className="post-item">
+				<div className="post-item-content">
+					<div className="post-category">{post.category}</div>
 					<h2>{post.title}</h2>
 					<p>{post.subTitle}</p>
 					<p>
 						{post.date} · {post.readTime} min
 					</p>
-				</Link>
-			</div>
-			{post.imageUrl && (
-				<div className="post-item-image">
-					<img src={post.imageUrl} alt={post.title} />
 				</div>
-			)}
-		</article>
+				{post.imageUrl && (
+					<div className="post-item-image">
+						<img src={post.imageUrl} alt={post.title} />
+					</div>
+				)}
+			</article>
+		</Link>
 	);
 }

@@ -17,7 +17,7 @@ export default function Archive({ data = [] }) {
 
 	const navigate = useNavigate();
 
-	document.title = "Posts - " + CONFIG.siteName;
+	document.title = "Arquivo - " + CONFIG.siteName;
 
 	useEffect(() => {
 		const uniqueCategories = [
@@ -73,7 +73,7 @@ export default function Archive({ data = [] }) {
 	return (
 		<main className="archive-container">
 			<div className="archive-header">
-				<h1>Posts</h1>
+				<h1>Arquivo</h1>
 				<div className="category-filter">
 					<div className="tab-navigation">
 						<button

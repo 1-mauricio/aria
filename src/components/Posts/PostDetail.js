@@ -39,7 +39,8 @@ export default function PostDetail({ posts = [] }) {
 
 			const recents = posts.filter((post) => post.id !== findPost.id);
 			setRecentPosts(recents.slice(0, 3));
-
+			window.scrollTo(0, 0);
+			
 			return;
 		}
 	}, []);

@@ -5,29 +5,44 @@ import CONFIG from "../../CONFIG";
 
 export default function Header() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
-	const [isDarkMode, setIsDarkMode] = useState(false);
+	const [isDarkMode, setIsDarkMode] = useState(
+		localStorage.getItem("theme") == "dark" ? true : false
+	);
 	const [searchQuery, setSearchQuery] = useState("");
 	const [isSearchOpen, setIsSearchOpen] = useState(false);
+	const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
+	const [isSearchInputOpen, setIsSearchInputOpen] = useState(!isDesktop);
+	const [isHeaderCollapsed, setIsHeaderCollapsed] = useState(false);
 
 	const headerRef = useRef(null);
 	const navigate = useNavigate();
 
-	const [isHeaderCollapsed, setIsHeaderCollapsed] = useState(false); // Estado para controlar o colapso do header
+	useEffect(() => {
+		const handleResize = () => {
+			const biggerThan768 = window.innerWidth >= 768;
+			setIsDesktop(biggerThan768);
+			if (biggerThan768) setIsSearchInputOpen(false);
+			else setIsSearchInputOpen(true)
+		};
+
+		window.addEventListener("resize", handleResize);
+
+		return () => {
+			window.removeEventListener("resize", handleResize);
+		};
+	}, []);
 
 	useEffect(() => {
-		// Monitorando a rolagem da página
 		const handleScroll = () => {
-			if (window.scrollY > 100) { // Ajuste o valor conforme necessário
-				setIsHeaderCollapsed(true); // Colapsa o header
+			if (window.scrollY > 100) {
+				setIsHeaderCollapsed(true);
 			} else {
-				setIsHeaderCollapsed(false); // Restaura o header
+				setIsHeaderCollapsed(false);
 			}
 		};
 
-		// Adiciona o listener de scroll
 		window.addEventListener("scroll", handleScroll);
 
-		// Limpeza do listener ao desmontar o componente
 		return () => {
 			window.removeEventListener("scroll", handleScroll);
 		};
@@ -87,6 +102,15 @@ export default function Header() {
 		setIsSearchOpen(!isSearchOpen);
 	};
 
+	const toggleSearchInput = () => {
+		if (!isDesktop) return;
+		if (isSearchInputOpen && searchQuery.trim() === "") {
+			setIsSearchInputOpen(false);
+			return;
+		}
+		setIsSearchInputOpen(true);
+	};
+
 	const toggleMenu = () => {
 		if (isSearchOpen) setIsSearchOpen(false);
 		setIsMenuOpen(!isMenuOpen);
@@ -108,7 +132,10 @@ export default function Header() {
 	};
 
 	return (
-		<header className={`header ${isHeaderCollapsed ? "collapsed" : ""}`} ref={headerRef}>
+		<header
+			className={`header ${isHeaderCollapsed ? "collapsed" : ""}`}
+			ref={headerRef}
+		>
 			<div className="header-content">
 				<div className="left-section">
 					<Link to="/" className="site-title">
@@ -188,12 +215,18 @@ export default function Header() {
 					>
 						<input
 							type="text"
-							className="search-input"
+							className={`search-input ${
+								!isSearchInputOpen ? "collapsed" : ""
+							}`}
 							placeholder="Pesquisar..."
 							value={searchQuery}
 							onChange={handleSearchChange}
 						/>
-						<button type="submit" className="search-button">
+						<button
+							type="submit"
+							className="search-button"
+							onClick={toggleSearchInput}
+						>
 							<svg
 								className="search-icon"
 								xmlns="http://www.w3.org/2000/svg"
@@ -212,11 +245,13 @@ export default function Header() {
 				</nav>
 
 				<nav className={`nav-menu links ${isMenuOpen ? "active" : ""}`}>
+					{/*
 					<Link to="/" onClick={() => setIsMenuOpen(false)}>
 						Home
 					</Link>
+					*/}
 					<Link to="/posts" onClick={() => setIsMenuOpen(false)}>
-						Posts
+						Arquivo
 					</Link>
 					<Link to="/sobre" onClick={() => setIsMenuOpen(false)}>
 						Sobre
