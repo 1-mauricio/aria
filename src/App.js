@@ -26,13 +26,16 @@ export default function App() {
 	);
 	const [error, setError] = useState(null);
 
+	const CACHE_EXPIRATION_TIME = CONFIG.cacheExpiration * 60 * 1000;
+
 	useEffect(() => {
 		const loadPosts = async () => {
 			try {
 				const cachedTimestamp = localStorage.getItem("posts_timestamp");
 				const isExpired =
 					!cachedTimestamp ||
-					Date.now() - parseInt(cachedTimestamp) > 30 * 60 * 1000;
+					Date.now() - parseInt(cachedTimestamp) >
+						CACHE_EXPIRATION_TIME;
 
 				if (isExpired) {
 					setLoading(true);
@@ -45,7 +48,7 @@ export default function App() {
 					);
 				}
 			} catch (err) {
-				console.log(err)
+				console.log(err);
 				setError("Erro ao carregar posts.");
 			} finally {
 				setLoading(false);
@@ -88,17 +91,20 @@ export default function App() {
 
 	return (
 		<BrowserRouter>
-		 <Helmet>
-        <title>{CONFIG.seo.title}</title>
-        <meta name="description" content={CONFIG.seo.description} />
-        <meta name="author" content={CONFIG.siteName} />
-        <meta name="keywords" content={CONFIG.seo.keywords} />
-        <meta property="og:title" content={CONFIG.seo.title} />
-        <meta property="og:description" content={CONFIG.seo.description} />
-        <meta property="og:url" content={CONFIG.seo.url} />
-        <meta property="og:image" content={CONFIG.seo.image} />
-        <meta property="og:type" content="website" />
-      </Helmet>
+			<Helmet>
+				<title>{CONFIG.seo.title}</title>
+				<meta name="description" content={CONFIG.seo.description} />
+				<meta name="author" content={CONFIG.siteName} />
+				<meta name="keywords" content={CONFIG.seo.keywords} />
+				<meta property="og:title" content={CONFIG.seo.title} />
+				<meta
+					property="og:description"
+					content={CONFIG.seo.description}
+				/>
+				<meta property="og:url" content={CONFIG.seo.url} />
+				<meta property="og:image" content={CONFIG.seo.image} />
+				<meta property="og:type" content="website" />
+			</Helmet>
 			<Header />
 			<Routes>
 				<Route path="/" element={<Home posts={posts} />} />

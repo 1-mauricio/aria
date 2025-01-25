@@ -2,6 +2,7 @@ const CONFIG = {
 	siteName: "A Ária",
 	apiUrl: "https://imprensamalakoff-backend.onrender.com",
 	featuredPost: 30,
+	cacheExpiration: 10,
 	contactEmail: "contato@meusite.com",
 	siteDescription:
 		"Fique por dentro das últimas notícias e tendências sobre design, tecnologia e ética na web.",

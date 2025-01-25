@@ -1,7 +1,7 @@
 .donate-container {
 	max-width: 680px;
-	margin: 40px auto;
-	padding: 0 20px;
+	margin: var(--margin-pages);
+	padding: var(--padding-pages);
 }
 
 .donate-header {

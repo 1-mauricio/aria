@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/header.css";
 import CONFIG from "../../CONFIG";
@@ -7,7 +7,31 @@ export default function Header() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const [isDarkMode, setIsDarkMode] = useState(false);
 	const [searchQuery, setSearchQuery] = useState("");
+	const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+	const headerRef = useRef(null);
 	const navigate = useNavigate();
+
+	const [isHeaderCollapsed, setIsHeaderCollapsed] = useState(false); // Estado para controlar o colapso do header
+
+	useEffect(() => {
+		// Monitorando a rolagem da página
+		const handleScroll = () => {
+			if (window.scrollY > 100) { // Ajuste o valor conforme necessário
+				setIsHeaderCollapsed(true); // Colapsa o header
+			} else {
+				setIsHeaderCollapsed(false); // Restaura o header
+			}
+		};
+
+		// Adiciona o listener de scroll
+		window.addEventListener("scroll", handleScroll);
+
+		// Limpeza do listener ao desmontar o componente
+		return () => {
+			window.removeEventListener("scroll", handleScroll);
+		};
+	}, []);
 
 	useEffect(() => {
 		const savedTheme = localStorage.getItem("theme");
@@ -19,6 +43,30 @@ export default function Header() {
 			document.body.removeAttribute("data-theme");
 		}
 	}, []);
+
+	useEffect(() => {
+		const handleClickOutside = (event) => {
+			if (
+				(isSearchOpen &&
+					headerRef.current &&
+					!headerRef.current.contains(event.target)) ||
+				(isMenuOpen &&
+					headerRef.current &&
+					!headerRef.current.contains(event.target))
+			) {
+				setIsSearchOpen(false);
+				setIsMenuOpen(false);
+			}
+		};
+
+		document.addEventListener("mousedown", handleClickOutside);
+		document.addEventListener("touchstart", handleClickOutside);
+
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
+			document.removeEventListener("touchstart", handleClickOutside);
+		};
+	}, [isSearchOpen, isMenuOpen]);
 
 	const toggleTheme = () => {
 		const newTheme = !isDarkMode ? "dark" : "light";
@@ -33,6 +81,17 @@ export default function Header() {
 		localStorage.setItem("theme", newTheme);
 	};
 
+	const toggleSearch = () => {
+		if (isMenuOpen) setIsMenuOpen(false);
+
+		setIsSearchOpen(!isSearchOpen);
+	};
+
+	const toggleMenu = () => {
+		if (isSearchOpen) setIsSearchOpen(false);
+		setIsMenuOpen(!isMenuOpen);
+	};
+
 	const handleSearchChange = (e) => {
 		setSearchQuery(e.target.value);
 	};
@@ -44,12 +103,12 @@ export default function Header() {
 				`/search?searchTerm=${encodeURIComponent(searchQuery.trim())}`
 			);
 			setSearchQuery("");
-			setIsMenuOpen(false);
+			setIsSearchOpen(false);
 		}
 	};
 
 	return (
-		<header className="header">
+		<header className={`header ${isHeaderCollapsed ? "collapsed" : ""}`} ref={headerRef}>
 			<div className="header-content">
 				<div className="left-section">
 					<Link to="/" className="site-title">
@@ -92,17 +151,37 @@ export default function Header() {
 						)}
 					</button>
 
-					<div
-						className="menu-hamburger"
-						onClick={() => setIsMenuOpen(!isMenuOpen)}
+					<button
+						className="search-button mobile"
+						onClick={toggleSearch}
 					>
+						<svg
+							className="search-icon"
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							strokeWidth="2"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+						>
+							<circle cx="11" cy="11" r="8"></circle>
+							<line x1="16" y1="16" x2="20" y2="20"></line>
+						</svg>
+					</button>
+
+					<div className="menu-hamburger" onClick={toggleMenu}>
 						<div></div>
 						<div></div>
 						<div></div>
 					</div>
 				</div>
 
-				<nav className={`nav-menu ${isMenuOpen ? "active" : ""}`}>
+				<nav
+					className={`nav-menu search ${
+						isSearchOpen ? "active" : ""
+					}`}
+				>
 					<form
 						className="search-container"
 						onSubmit={handleSearchSubmit}
@@ -130,6 +209,9 @@ export default function Header() {
 							</svg>
 						</button>
 					</form>
+				</nav>
+
+				<nav className={`nav-menu links ${isMenuOpen ? "active" : ""}`}>
 					<Link to="/" onClick={() => setIsMenuOpen(false)}>
 						Home
 					</Link>

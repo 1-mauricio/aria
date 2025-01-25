@@ -33,15 +33,28 @@ export async function fetchPostByCustomLink(title) {
 	return post;
 }
 
-export const fetchPostById = async (id) => {
-	const response = await fetch(`${API_URL}/${id}`);
-	if (!response.ok) throw new Error("Erro ao buscar post");
-	const post = await response.json();
+export const fetchPostById = async (id, updateViewsCount = false) => {
+	try {
+		const url = updateViewsCount
+			? `${API_URL}/${id}?updateViewsCount=true`
+			: `${API_URL}/${id}`;
 
-	post.date = formatDate(post.date);
+		const response = await fetch(url);
+		if (!response.ok) {
+			throw new Error("Erro ao buscar post");
+		}
 
-	return post;
+		const post = await response.json();
+
+		post.date = formatDate(post.date);
+
+		return post;
+	} catch (error) {
+		console.error("Erro ao buscar post:", error);
+		throw error;
+	}
 };
+
 
 export const likePost = async (post) => {
 	const {id} = post;

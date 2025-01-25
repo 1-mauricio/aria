@@ -18,8 +18,6 @@ export default function Search({ data = [] }) {
 		const queryParams = new URLSearchParams(location.search);
 		const searchTerm = queryParams.get("searchTerm");
 
-		console.log(searchTerm)
-
 		if (searchTerm) {
 			setLoading(true);
 			setError(null);

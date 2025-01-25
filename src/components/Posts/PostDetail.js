@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import {
-	fetchPostById,
-} from "../../services/PostService";
+import { fetchPostById } from "../../services/PostService";
 import NotFound from "../Pages/NotFound";
 import DonationSection from "../Pages/DonationSection";
 import PostInteractions from "../Pages/PostInteractions";
@@ -29,15 +27,10 @@ export default function PostDetail({ posts = [] }) {
 			setPost(findPost);
 			setLoading(false);
 
-			console.log(viewsUpdated)
-
 			if (!viewsUpdated) {
-				console.log("entrou")
-				fetchPostById(findPost.id)
+				fetchPostById(findPost.id, true)
 					.then(() => {
 						setViewsUpdated(true);
-			console.log(viewsUpdated)
-
 					})
 					.catch(() => {
 						console.error("Erro ao atualizar as views.");
@@ -81,9 +74,7 @@ export default function PostDetail({ posts = [] }) {
 					<span className="post-read-time">{post.readTime} min</span>
 				</div>
 
-				<PostInteractions
-					post={post}
-				/>
+				<PostInteractions post={post} />
 
 				{post.imageUrl && (
 					<div className="post-image-container">
@@ -118,7 +109,7 @@ export default function PostDetail({ posts = [] }) {
 						))}
 					</ul>
 				</section>
-			)}			
+			)}
 		</article>
 	);
 }

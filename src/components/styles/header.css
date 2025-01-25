@@ -4,9 +4,40 @@
 	left: 0;
 	width: 100%;
 	background-color: var(--background-color);
-	border-bottom: 1px solid var(--border-color);
+	border-bottom: .1px solid var(--border-color);
 	padding: 16px 20px;
 	z-index: 1000;
+	transition: all 0.3s ease-in-out;
+}
+
+.header.collapsed {
+	height: 60px;
+	padding: 8px 10px;
+}
+
+.header .logo-img {
+	transition: width 0.3s ease-in-out;
+}
+
+.header.collapsed .logo-img {
+	width: 50px;
+}
+
+.header nav a {
+	transition: font-size 0.3s ease-in-out;
+}
+
+.header.collapsed nav a {
+	font-size: 12px;
+}
+
+.header .subscribe-button {
+	transition: all 0.3s ease-in-out;
+}
+
+.header.collapsed .subscribe-button {
+	padding: 6px 12px;
+	font-size: 12px;
 }
 
 .header-content {
@@ -133,6 +164,10 @@ nav a {
 	transition: background-color 0.3s ease;
 }
 
+.search-button.mobile {
+	display: none;
+}
+
 .search-button:hover {
 	background-color: rgba(0, 0, 0, 0.1);
 }
@@ -143,13 +178,17 @@ nav a {
 	color: var(--icon-color, #000);
 }
 
+.nav-menu.search {
+	margin-right: 0.5rem;
+}
+
 .logo-img {
-	max-width: 100%; /* Não ultrapassa o tamanho do container */
-	height: auto; /* Mantém a proporção */
-	width: 70px; /* Tamanho fixo opcional */
-	display: block; /* Remove espaços indesejados ao redor do GIF */
-	margin: 0 auto; /* Centraliza o GIF no container */
-  }
+	max-width: 100%;
+	height: auto;
+	width: 70px;
+	display: block;
+	margin: 0 auto;
+}
 
 [data-theme="dark"] .search-icon {
 	color: #fff;
@@ -160,12 +199,18 @@ nav a {
 		flex-wrap: wrap;
 		justify-content: space-between;
 	}
+	.header,
+	.header.collapsed {
+		height: auto;
+	}
 
 	.logo-img {
 		width: 50px;
-		
 	}
 
+	.header.collapsed .logo-img {
+		width: 40px;
+	}
 	.left-section {
 		flex-grow: 1;
 	}
@@ -193,6 +238,10 @@ nav a {
 	}
 
 	.menu-hamburger {
+		display: flex;
+	}
+
+	.search-button.mobile {
 		display: flex;
 	}
 
@@ -265,7 +314,7 @@ nav a {
 	}
 
 	.search-icon {
-		width: 16px;
-		height: 16px;
+		width: 20px;
+		height: 20px;
 	}
 }

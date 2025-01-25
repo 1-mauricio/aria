@@ -1,7 +1,6 @@
 .about-container {
-	max-width: 1200px;
-	padding: 20px;
-	margin: 0 auto;
+	margin: var(--margin-pages);
+	padding: var(--padding-pages);
 }
 
 .about-header {
