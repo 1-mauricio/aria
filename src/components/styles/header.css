@@ -4,7 +4,7 @@
 	left: 0;
 	width: 100%;
 	background-color: var(--background-color);
-	border-bottom: .1px solid var(--border-color);
+	border-bottom: 0.1px solid var(--border-color);
 	padding: 16px 20px;
 	z-index: 1000;
 	transition: all 0.3s ease-in-out;
@@ -27,17 +27,8 @@
 	transition: font-size 0.3s ease-in-out;
 }
 
-.header.collapsed nav a {
-	font-size: 12px;
-}
-
 .header .subscribe-button {
 	transition: all 0.3s ease-in-out;
-}
-
-.header.collapsed .subscribe-button {
-	padding: 6px 12px;
-	font-size: 12px;
 }
 
 .header-content {
@@ -192,6 +183,17 @@ nav a {
 
 [data-theme="dark"] .search-icon {
 	color: #fff;
+}
+
+@media (min-width: 768px) {
+	.header.collapsed nav a {
+		font-size: 12px;
+	}
+
+	.header.collapsed .subscribe-button {
+		padding: 6px 12px;
+		font-size: 12px;
+	}
 }
 
 @media (max-width: 768px) {
