@@ -20,7 +20,7 @@
 }
 
 .header.collapsed .logo-img {
-	width: 50px;
+	width: 100px;
 }
 
 .header nav a {
@@ -181,7 +181,7 @@ nav a {
 .logo-img {
 	max-width: 100%;
 	height: auto;
-	width: 70px;
+	width: 150px;
 	display: block;
 	margin: 0 auto;
 }
@@ -212,11 +212,11 @@ nav a {
 	}
 
 	.logo-img {
-		width: 50px;
+		width: 100px;
 	}
 
 	.header.collapsed .logo-img {
-		width: 40px;
+		width: 80px;
 	}
 	.left-section {
 		flex-grow: 1;

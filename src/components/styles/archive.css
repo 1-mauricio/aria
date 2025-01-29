@@ -18,22 +18,7 @@
 	margin-bottom: 20px;
 }
 
-.tab-navigation {
-	display: flex;
-	background-color: var(--background-light-color);
-	padding: 3px;
-	border-radius: 16px;
-	box-shadow: 0 2px 4px var(--shadow-color);
-	overflow-x: auto;
-	max-width: 100%;
-	-webkit-overflow-scrolling: touch;
-}
-
 @media (max-width: 768px) {
-	.tab-navigation {
-		padding: 2px;
-	}
-
 	.archive-container {
 		margin: 0 !important;
 		margin-top: 1rem !important;

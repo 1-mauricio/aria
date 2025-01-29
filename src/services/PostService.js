@@ -7,6 +7,14 @@ const formatDate = (dateString) => {
 	return date.toLocaleDateString("pt-BR");
 };
 
+const formatTime = (dateString) => {
+	const date = new Date(dateString);
+	return date.toLocaleTimeString("pt-BR", {
+	  hour: "2-digit",
+	  minute: "2-digit",
+	});
+  };
+
 export const fetchPosts = async () => {
 	const response = await fetch(API_URL);
 	if (!response.ok) throw new Error("Erro ao buscar posts");
@@ -15,6 +23,7 @@ export const fetchPosts = async () => {
 	const formattedPosts = posts.map((post) => ({
 		...post,
 		date: formatDate(post.date),
+		time: formatTime(post.date),
 	}));
 
 	return formattedPosts;

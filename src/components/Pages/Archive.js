@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import PostList from "../Posts/PostList";
+import PostList from "../UI/PostList";
 import { useParams } from "react-router-dom";
 import "../styles/archive.css";
 import { useNavigate } from "react-router-dom";
 import CONFIG from "../../CONFIG";
 
-export default function Archive({ data = [] }) {
+export default function Archive({ data = [], uniqueCategories = [] }) {
 	const { category: routeCategory } = useParams();
 	const [loading, setLoading] = useState(true);
 	const [categories, setCategories] = useState([]);
@@ -20,15 +20,12 @@ export default function Archive({ data = [] }) {
 	document.title = "Arquivo - " + CONFIG.siteName;
 
 	useEffect(() => {
-		const uniqueCategories = [
-			...new Set(data.map((post) => post.category?.toLowerCase())),
-		].filter(Boolean);
-
-		setCategories(uniqueCategories);
-	}, [data]);
+		setCategories(uniqueCategories)
+	}, [uniqueCategories])
 
 	useEffect(() => {
 		setLoading(true);
+
 		const updatedPosts =
 			selectedCategory === "all"
 				? data

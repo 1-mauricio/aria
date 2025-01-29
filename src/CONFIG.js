@@ -1,7 +1,9 @@
 const CONFIG = {
 	siteName: "A Ária",
 	apiUrl: "https://imprensamalakoff-backend.onrender.com",
+	pix: "definir o pix",
 	featuredPost: 30,
+	articles: [52, 203],
 	cacheExpiration: 10,
 	contactEmail: "contato@meusite.com",
 	siteDescription:
@@ -12,7 +14,7 @@ const CONFIG = {
 	},
 
 	seo: {
-		title: "A Ária - Design, Tecnologia e Ética na Web",
+		title: "A Ária",
 		description:
 			"Fique por dentro das últimas notícias e tendências sobre design, tecnologia e ética na web.",
 		keywords: [
@@ -23,7 +25,7 @@ const CONFIG = {
 			"tendências",
 		],
 		url: "https://imprensamalakoff-frontend.onrender.com/",
-		image: "https://www.meusite.com/images/seo-image.jpg",
+		image: "/assets/logos/1.png",
 	},
 };
 

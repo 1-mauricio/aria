@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { fetchPostById } from "../../services/PostService";
-import NotFound from "../Pages/NotFound";
-import DonationSection from "../Pages/DonationSection";
-import PostInteractions from "../Pages/PostInteractions";
+import NotFound from "./NotFound";
+import DonationSection from "../UI/DonationSection";
+import PostInteractions from "../UI/PostInteractions";
 import "../styles/post-detail.css";
 
 export default function PostDetail({ posts = [] }) {
@@ -40,7 +40,7 @@ export default function PostDetail({ posts = [] }) {
 			const recents = posts.filter((post) => post.id !== findPost.id);
 			setRecentPosts(recents.slice(0, 3));
 			window.scrollTo(0, 0);
-			
+
 			return;
 		}
 	}, []);
@@ -76,26 +76,14 @@ export default function PostDetail({ posts = [] }) {
 				</div>
 
 				<PostInteractions post={post} />
-
-				{post.imageUrl && (
-					<div className="post-image-container">
-						<div className="post-image-wrapper">
-							<img
-								src={post.imageUrl}
-								alt={post.title}
-								className="post-image"
-							/>
-						</div>
-					</div>
-				)}
 			</header>
-
-			<DonationSection width="60%" />
 
 			<div
 				className="post-content"
 				dangerouslySetInnerHTML={{ __html: post.content }}
 			></div>
+
+			<DonationSection width="60%" />
 
 			{recentPosts.length > 0 && (
 				<section className="related-posts">

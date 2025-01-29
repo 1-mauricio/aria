@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "../styles/not-found.css";
 import CONFIG from "../../CONFIG";
 
-document.title = "Não Encontrado - " + CONFIG.siteName;
+document.title = CONFIG.siteName;
 
 export default function NotFound() {
 	return (

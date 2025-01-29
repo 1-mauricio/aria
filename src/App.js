@@ -3,13 +3,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Layout/Header";
 import Home from "./components/Pages/Home";
 import Archive from "./components/Pages/Archive";
-import PostDetail from "./components/Posts/PostDetail";
+import PostDetail from "./components/Pages/PostDetail";
 import About from "./components/Pages/About";
 import Footer from "./components/Layout/Footer";
 import Subscribe from "./components/Pages/Subscribe";
 import Donate from "./components/Pages/Donate";
 import NotFound from "./components/Pages/NotFound";
-import Search from "./components/Pages/Search";
+import Search from "./components/UI/Search";
 
 import { fetchPosts } from "./services/PostService";
 import CONFIG from "./CONFIG";
@@ -25,8 +25,18 @@ export default function App() {
 		!localStorage.getItem("cached_posts")
 	);
 	const [error, setError] = useState(null);
+	const [categories, setCategories] = useState([])
 
 	const CACHE_EXPIRATION_TIME = CONFIG.cacheExpiration * 60 * 1000;
+
+	useEffect(() => {
+		const uniqueCategories = [
+			...new Set(posts.map((post) => post.category?.toLowerCase())),
+		].filter(Boolean);
+
+		setCategories(uniqueCategories);
+
+	}, [posts]);
 
 	useEffect(() => {
 		const loadPosts = async () => {
@@ -107,11 +117,11 @@ export default function App() {
 			</Helmet>
 			<Header />
 			<Routes>
-				<Route path="/" element={<Home posts={posts} />} />
-				<Route path="/posts" element={<Archive data={posts} />} />
+				<Route path="/" element={<Home posts={posts} uniqueCategories={categories} />} />
+				<Route path="/posts" element={<Archive data={posts} uniqueCategories={categories} />} />
 				<Route
 					path="/posts/:category"
-					element={<Archive data={posts} />}
+					element={<Archive data={posts} uniqueCategories={categories} />}
 				/>
 				<Route path="p/:id" element={<PostDetail posts={posts} />} />
 				<Route

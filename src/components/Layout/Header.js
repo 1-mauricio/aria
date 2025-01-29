@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../styles/header.css";
 import CONFIG from "../../CONFIG";
 
@@ -17,12 +17,15 @@ export default function Header() {
 	const headerRef = useRef(null);
 	const navigate = useNavigate();
 
+	const location = useLocation();
+	const isHome = location.pathname === "/";
+
 	useEffect(() => {
 		const handleResize = () => {
 			const biggerThan768 = window.innerWidth >= 768;
 			setIsDesktop(biggerThan768);
 			if (biggerThan768) setIsSearchInputOpen(false);
-			else setIsSearchInputOpen(true)
+			else setIsSearchInputOpen(true);
 		};
 
 		window.addEventListener("resize", handleResize);
@@ -139,7 +142,7 @@ export default function Header() {
 			<div className="header-content">
 				<div className="left-section">
 					<Link to="/" className="site-title">
-						<img className="logo-img" src="/assets/logo-crop.gif" />
+						<img className="logo-img" src="/assets/a-aria.gif" />
 					</Link>
 				</div>
 

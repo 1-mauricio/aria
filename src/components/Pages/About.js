@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import DonationSection from "./DonationSection";
+import DonationSection from "../UI/DonationSection";
 import CONFIG from "../../CONFIG";
 import "../styles/about.css";
 

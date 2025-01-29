@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { searchPost } from "../../services/PostService";
 import "../styles/not-found.css";
-import PostList from "../Posts/PostList";
+import PostList from "./PostList";
 import CONFIG from "../../CONFIG";
 
 export default function Search({ data = [] }) {
