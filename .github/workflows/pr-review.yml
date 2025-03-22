@@ -15,7 +15,11 @@ jobs:
       - name: Obter diff do PR
         run: |
           git fetch origin main
-          git diff origin/main...HEAD > changes.diff
+          if git merge-base --is-ancestor origin/main HEAD; then
+            git diff origin/main...HEAD > changes.diff
+          else
+            echo "No common ancestor between origin/main and HEAD" > changes.diff
+          fi
         shell: bash
 
       - name: Analisar código com OpenAI
