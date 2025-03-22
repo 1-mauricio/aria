@@ -1,4 +1,4 @@
-name: Perplexity Code Review
+name: Gemini Code Review
 
 on:
   pull_request:
@@ -16,49 +16,48 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: GrantBirki/git-diff-action@v2.4.0  # A GitHub action for gathering the git diff of our pull request
+      - uses: GrantBirki/git-diff-action@v2.4.0  # Obtém o diff do código alterado
         id: git-diff
         with:
           raw_diff_file_output: diff.txt
-          file_output_only: "true" # Excludes printing the diff on the console for security purposes
+          file_output_only: "true"
 
-      - name: Perform Code Review with Perplexity
+      - name: Perform Code Review with Gemini
         id: code_review_suggestions
         run: |
-          # Get the code changes
+          # Lendo as mudanças no código
           changed_code=$(cat ${{steps.git-diff.outputs.raw-diff-path}})
           
           echo "PR Changes: $changed_code"
           
-          # Escape newlines and double quotes in the changed_code for API request
+          # Escape de caracteres para evitar problemas na requisição
           escaped_code=$(echo "$changed_code" | jq -s -R -r @json)
 
-          # Call Perplexity API
-          response=$(curl -s https://api.perplexity.ai/v1/code-review \
+          # Fazendo a requisição para a API do Gemini
+          response=$(curl -s -X POST "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${{ secrets.GEMINI_API_KEY }}" \
             -H "Content-Type: application/json" \
-            -H "Authorization: Bearer ${{ secrets.PERPLEXITY_API_KEY }}" \
             -d "{
-              \"text\": \"$escaped_code\",
-              \"model\": \"perplexity-v1\",
-              \"instructions\": \"Review the code and suggest improvements.\"
+              \"contents\": [
+                { \"role\": \"user\", \"parts\": [{ \"text\": \"Revise este código e sugira melhorias:\n$escaped_code\" }] }
+              ]
             }")
 
-          echo "This is the response: $response"
+          echo "API Response: $response"
           
-          # Extract the review suggestions from the response
-          code_review_suggestions=$(echo "$response" | jq -r '.review.suggestions')
+          # Extraindo a resposta do Gemini
+          code_review_suggestions=$(echo "$response" | jq -r '.candidates[0].content.parts[0].text')
 
           echo "$code_review_suggestions" > code_suggestions.txt
 
       - name: Add Code Suggestions Comment
         run: |
-          # Read and output the suggestions
+          # Ler e exibir as sugestões
           cat code_suggestions.txt
           
-          # Escape the comments for posting as a GitHub comment
+          # Formatar o comentário para o GitHub
           escaped_comments=$(echo "$(cat code_suggestions.txt)" | jq -s -R -r @json)
           
-          # Post the suggestions as a comment on the PR
+          # Postando o comentário no PR
           curl -s -L \
             -X POST \
             -H "Accept: application/vnd.github+json" \
