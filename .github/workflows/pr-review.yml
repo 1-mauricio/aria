@@ -33,12 +33,8 @@ jobs:
           # Fazendo a requisição para a API do Gemini
           response=$(curl -s -X POST "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${{ secrets.GEMINI_API_KEY }}" \
             -H "Content-Type: application/json" \
-            -d "{
-              \"contents\": [
-                { \"role\": \"user\", \"parts\": [{ \"text\": \"Revise este código e sugira melhorias:\n$changed_code\" }] }
-              ]
-            }")
-
+            -d "$(jq -n --arg code "$changed_code" '{contents: [{role: "user", parts: [{text: ("Revise este código e sugira melhorias:\n" + $code)}]}]}')")
+          
           echo "API Response: $response"
           
           # Extraindo a resposta do Gemini
