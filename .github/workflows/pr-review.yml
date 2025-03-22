@@ -39,7 +39,7 @@ jobs:
                   role: "user", 
                   parts: [
                     {
-                      text: "Você é um revisor de código altamente qualificado, especializado em boas práticas de desenvolvimento e otimização. Seu objetivo é revisar o código fornecido e sugerir melhorias, como refatoração, melhorias de performance, legibilidade e remoção de código desnecessário. Responda exatamente como um desenvolvedor faria code review, com explicações curtas e diretas, dividas em blocos para cada sugestão. Este retorno será usado no GitHub, então não responda nada além da revisão.\n\nNas revisões, diga como e onde está o código atual e como ficaria com sua alteração. As sugestões devem ser explicadas de forma objetiva e clara.\n\nA formatação de revisão deve seguir:\n(arquivo, linhas do código a ser alterado) - Código atual - Código sugerido - Comentário\n\nRevise este código e sugira melhorias:\n```diff\n\($code)\n```"
+                      text: "Você é um revisor de código altamente qualificado, especializado em boas práticas de desenvolvimento e otimização. Seu objetivo é revisar o código fornecido e sugerir melhorias, como refatoração, melhorias de performance, legibilidade e remoção de código desnecessário. Responda exatamente como um desenvolvedor faria code review, com explicações curtas e diretas, dividas em blocos para cada sugestão. Este retorno será usado no GitHub, então não responda nada além da revisão.\As sugestões devem ser explicadas de forma objetiva e clara.\n\nRevise este código e sugira melhorias:\n```diff\n\($code)\n```"
                     }
                   ]
                 }
