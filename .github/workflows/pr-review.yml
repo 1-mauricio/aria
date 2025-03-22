@@ -9,28 +9,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout código
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Garante que o histórico completo do repositório seja baixado
+          fetch-depth: 0  # Baixa todo o histórico do repositório
 
       - name: Verificar se o branch main existe
         run: |
           if git show-ref --verify --quiet refs/remotes/origin/main; then
-            echo "Main branch encontrado."
+            echo "Branch 'main' encontrado."
           else
-            echo "Nenhum branch 'main' encontrado. O repositório pode usar 'master' ou outro nome."
+            echo "Nenhum branch 'main' encontrado. O repositório pode usar outro nome."
             exit 1
           fi
 
       - name: Obter diff do PR
         run: |
-          git fetch origin main
+          git fetch --unshallow origin main || echo "Já estava completo"
+          
           if git merge-base --is-ancestor origin/main HEAD; then
+            echo "Gerando diff em relação a origin/main"
             git diff origin/main...HEAD > changes.diff
           else
-            echo "Nenhum ancestral comum encontrado. Gerando diff completo."
-            git diff > changes.diff
+            echo "Nenhum ancestral comum encontrado. Gerando diff do primeiro commit do branch."
+            git diff $(git rev-list --max-parents=0 HEAD) > changes.diff
           fi
         shell: bash
 
