@@ -30,6 +30,12 @@
 	background-color: var(--button-hover-background);
 }
 
+@media (max-width: 1024px) {
+	.donation-section {
+		max-width: 500px;
+	}
+}
+
 @media (max-width: 768px) {
 	.donation-section {
 		width: 100% !important;

@@ -4,7 +4,7 @@ const CONFIG = {
 	pix: "definir o pix",
 	featuredPost: 30,
 	articles: [52, 203],
-	cacheExpiration: 10,
+	cacheExpiration: false,
 	contactEmail: "contato@meusite.com",
 	siteDescription:
 		"Fique por dentro das últimas notícias e tendências sobre design, tecnologia e ética na web.",

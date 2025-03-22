@@ -20,8 +20,8 @@ export default function Archive({ data = [], uniqueCategories = [] }) {
 	document.title = "Arquivo - " + CONFIG.siteName;
 
 	useEffect(() => {
-		setCategories(uniqueCategories)
-	}, [uniqueCategories])
+		setCategories(uniqueCategories);
+	}, [uniqueCategories]);
 
 	useEffect(() => {
 		setLoading(true);
@@ -29,15 +29,19 @@ export default function Archive({ data = [], uniqueCategories = [] }) {
 		const updatedPosts =
 			selectedCategory === "all"
 				? data
-				: data.filter(
-						(post) =>
-							post.category &&
-							post.category.toLowerCase() === selectedCategory
-				  );
+				: data
+						.filter(
+							(post) =>
+								post.category &&
+								post.category.toLowerCase() === selectedCategory
+						)
+						.sort((a, b) => {
+							return new Date(a.date) - new Date(b.date);
+						});
 
-		setFilteredPosts(updatedPosts);
-
-		const jsx = <PostList key={selectedCategory} postsList={updatedPosts} />;
+		const jsx = (
+			<PostList key={selectedCategory} postsList={updatedPosts} />
+		);
 		setPostListJSX(jsx);
 
 		setLoading(false);
@@ -48,7 +52,6 @@ export default function Archive({ data = [], uniqueCategories = [] }) {
 			setSelectedCategory(routeCategory.toLowerCase());
 		}
 	}, [routeCategory]);
-
 
 	const handleCategoryChange = (category) => {
 		setSelectedCategory(category.toLowerCase());
@@ -89,9 +92,7 @@ export default function Archive({ data = [], uniqueCategories = [] }) {
 										? "active"
 										: ""
 								}`}
-								onClick={() =>
-									handleCategoryChange(category)
-								}
+								onClick={() => handleCategoryChange(category)}
 							>
 								{category}
 							</button>
@@ -99,9 +100,7 @@ export default function Archive({ data = [], uniqueCategories = [] }) {
 					</div>
 				</div>
 			</div>
-			<div className="filtered-posts">
-				{postListJSX}
-			</div>
+			<div className="filtered-posts">{postListJSX}</div>
 		</main>
 	);
 }

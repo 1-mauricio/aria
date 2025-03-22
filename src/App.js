@@ -14,7 +14,7 @@ import Search from "./components/UI/Search";
 import { fetchPosts } from "./services/PostService";
 import CONFIG from "./CONFIG";
 import { Helmet } from "react-helmet";
-import { onCLS, onFCP, onFID, onLCP, onTTFB } from "web-vitals";
+//import { onCLS, onFCP, onFID, onLCP, onTTFB } from "web-vitals";
 
 export default function App() {
 	const [posts, setPosts] = useState(() => {
@@ -25,9 +25,18 @@ export default function App() {
 		!localStorage.getItem("cached_posts")
 	);
 	const [error, setError] = useState(null);
-	const [categories, setCategories] = useState([])
+	const [categories, setCategories] = useState([]);
 
 	const CACHE_EXPIRATION_TIME = CONFIG.cacheExpiration * 60 * 1000;
+
+	const checkCache = () => {
+		const cachedTimestamp = localStorage.getItem("posts_timestamp");
+		const isExpired =
+			!cachedTimestamp ||
+			Date.now() - parseInt(cachedTimestamp) > CACHE_EXPIRATION_TIME;
+
+		return isExpired;
+	};
 
 	useEffect(() => {
 		const uniqueCategories = [
@@ -35,27 +44,30 @@ export default function App() {
 		].filter(Boolean);
 
 		setCategories(uniqueCategories);
-
 	}, [posts]);
 
 	useEffect(() => {
 		const loadPosts = async () => {
 			try {
-				const cachedTimestamp = localStorage.getItem("posts_timestamp");
-				const isExpired =
-					!cachedTimestamp ||
-					Date.now() - parseInt(cachedTimestamp) >
-						CACHE_EXPIRATION_TIME;
-
-				if (isExpired) {
-					setLoading(true);
-					const data = await fetchPosts();
-					setPosts(data);
-					localStorage.setItem("cached_posts", JSON.stringify(data));
-					localStorage.setItem(
-						"posts_timestamp",
-						Date.now().toString()
-					);
+				if (CACHE_EXPIRATION_TIME) {
+					const isExpired = checkCache();
+					if (isExpired) {
+						setLoading(true);
+						const data = await fetchPosts();
+						setPosts(data);
+						localStorage.setItem(
+							"cached_posts",
+							JSON.stringify(data)
+						);
+						localStorage.setItem(
+							"posts_timestamp",
+							Date.now().toString()
+						);
+					} else {
+						setLoading(true);
+						const data = await fetchPosts();
+						setPosts(data);
+					}
 				}
 			} catch (err) {
 				console.log(err);
@@ -66,26 +78,6 @@ export default function App() {
 		};
 		loadPosts();
 	}, []);
-
-	/*
-	useEffect(() => {
-		onCLS((metric) => {
-			console.log("Cumulative Layout Shift:", metric);
-		});
-		onFCP((metric) => {
-			console.log("First Contentful Paint:", metric);
-		});
-		onFID((metric) => {
-			console.log("First Input Delay:", metric);
-		});
-		onLCP((metric) => {
-			console.log("Largest Contentful Paint:", metric);
-		});
-		onTTFB((metric) => {
-			console.log("Time to First Byte:", metric);
-		});
-	}, []);
-	*/
 
 	if (loading) {
 		return (
@@ -117,11 +109,23 @@ export default function App() {
 			</Helmet>
 			<Header />
 			<Routes>
-				<Route path="/" element={<Home posts={posts} uniqueCategories={categories} />} />
-				<Route path="/posts" element={<Archive data={posts} uniqueCategories={categories} />} />
+				<Route
+					path="/"
+					element={
+						<Home posts={posts} uniqueCategories={categories} />
+					}
+				/>
+				<Route
+					path="/posts"
+					element={
+						<Archive data={posts} uniqueCategories={categories} />
+					}
+				/>
 				<Route
 					path="/posts/:category"
-					element={<Archive data={posts} uniqueCategories={categories} />}
+					element={
+						<Archive data={posts} uniqueCategories={categories} />
+					}
 				/>
 				<Route path="p/:id" element={<PostDetail posts={posts} />} />
 				<Route

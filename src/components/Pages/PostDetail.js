@@ -83,11 +83,9 @@ export default function PostDetail({ posts = [] }) {
 				dangerouslySetInnerHTML={{ __html: post.content }}
 			></div>
 
-			<DonationSection width="60%" />
-
 			{recentPosts.length > 0 && (
 				<section className="related-posts">
-					<h2>Veja também nossos últimos posts</h2>
+					<h2>Últimas</h2>
 					<ul>
 						{recentPosts.map((recentPost) => (
 							<li key={recentPost.id}>
@@ -99,6 +97,9 @@ export default function PostDetail({ posts = [] }) {
 					</ul>
 				</section>
 			)}
+
+			<DonationSection width="60%" />
+
 		</article>
 	);
 }
