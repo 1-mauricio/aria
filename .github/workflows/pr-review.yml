@@ -12,7 +12,7 @@ jobs:
   code_review:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.1.1
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -26,26 +26,23 @@ jobs:
         id: code_review_suggestions
         run: |
           # Lendo as mudanças no código
-          changed_code=$(cat ${{steps.git-diff.outputs.raw-diff-path}})
+          changed_code=$(cat ${{steps.git-diff.outputs.raw-diff-path}} | jq -Rs .)
           
           echo "PR Changes: $changed_code"
           
-          # Escape de caracteres para evitar problemas na requisição
-          escaped_code=$(echo "$changed_code" | jq -s -R -r @json)
-
           # Fazendo a requisição para a API do Gemini
           response=$(curl -s -X POST "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${{ secrets.GEMINI_API_KEY }}" \
             -H "Content-Type: application/json" \
             -d "{
               \"contents\": [
-                { \"role\": \"user\", \"parts\": [{ \"text\": \"Revise este código e sugira melhorias:\n$escaped_code\" }] }
+                { \"role\": \"user\", \"parts\": [{ \"text\": \"Revise este código e sugira melhorias:\n$changed_code\" }] }
               ]
             }")
 
           echo "API Response: $response"
           
           # Extraindo a resposta do Gemini
-          code_review_suggestions=$(echo "$response" | jq -r '.candidates[0].content.parts[0].text')
+          code_review_suggestions=$(echo "$response" | jq -r '.candidates[0].content.parts[0].text' || echo "Erro ao analisar a resposta.")
 
           echo "$code_review_suggestions" > code_suggestions.txt
 
@@ -55,7 +52,7 @@ jobs:
           cat code_suggestions.txt
           
           # Formatar o comentário para o GitHub
-          escaped_comments=$(echo "$(cat code_suggestions.txt)" | jq -s -R -r @json)
+          escaped_comments=$(jq -Rs . < code_suggestions.txt)
           
           # Postando o comentário no PR
           curl -s -L \
