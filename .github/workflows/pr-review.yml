@@ -31,7 +31,7 @@ jobs:
           echo "PR Changes: $changed_code"
           
           # Fazendo a requisição para a API do Gemini
-          response=$(curl -s -X POST "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${{ secrets.GEMINI_API_KEY }}" \
+          response=$(curl -s -X POST "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${{ secrets.GEMINI_API_KEY }}" \
             -H "Content-Type: application/json" \
             -d "$(jq -n --arg code "$changed_code" '{contents: [{role: "user", parts: [{text: ("Revise este código e sugira melhorias:\n" + $code)}]}]}')")
           
