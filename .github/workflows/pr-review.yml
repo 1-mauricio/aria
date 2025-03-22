@@ -12,7 +12,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 
+          fetch-depth: 0  # Garante que o histórico completo do repositório seja baixado
+
+      - name: Verificar se o branch main existe
+        run: |
+          if git show-ref --verify --quiet refs/remotes/origin/main; then
+            echo "Main branch encontrado."
+          else
+            echo "Nenhum branch 'main' encontrado. O repositório pode usar 'master' ou outro nome."
+            exit 1
+          fi
 
       - name: Obter diff do PR
         run: |
@@ -20,7 +29,8 @@ jobs:
           if git merge-base --is-ancestor origin/main HEAD; then
             git diff origin/main...HEAD > changes.diff
           else
-            echo "No common ancestor between origin/main and HEAD" > changes.diff
+            echo "Nenhum ancestral comum encontrado. Gerando diff completo."
+            git diff > changes.diff
           fi
         shell: bash
 
