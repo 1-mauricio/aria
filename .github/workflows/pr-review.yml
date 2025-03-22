@@ -1,49 +1,22 @@
-name: AI Code Review
+name: AI Code Reviewer
 
 on:
   pull_request:
-    types: [opened, synchronize]
-
+    types:
+      - opened
+      - synchronize
+permissions: write-all
 jobs:
   review:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout código
-        uses: actions/checkout@v4
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: AI Code Reviewer
+        uses: 1-mauricio/aria@main
         with:
-          fetch-depth: 0  # Baixa todo o histórico para evitar problemas com merge base
-
-      - name: Garantir que o branch main está atualizado
-        run: |
-          git fetch origin main
-          git branch --track main origin/main || echo "Branch main já existe"
-
-      - name: Obter diff do PR
-        run: |
-          git diff origin/main...HEAD > changes.diff
-
-      - name: Analisar código com OpenAI
-        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # The GITHUB_TOKEN is there by default so you just need to keep it like it is and not necessarily need to add it as secret as it will throw an error. [More Details](https://docs.github.com/en/actions/security-guides/automatic-token-authentication#about-the-github_token-secret)
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: |
-          curl https://api.openai.com/v1/chat/completions \
-            -H "Content-Type: application/json" \
-            -H "Authorization: Bearer $OPENAI_API_KEY" \
-            -d '{
-              "model": "gpt-4",
-              "messages": [
-                {"role": "system", "content": "Você é um revisor de código experiente. Analise as mudanças no código e sugira melhorias."},
-                {"role": "user", "content": "'"$(cat changes.diff)"'"}
-              ]
-            }' | jq -r '.choices[0].message.content' > review.txt
-
-      - name: Instalar GitHub CLI
-        run: sudo apt update && sudo apt install -y gh
-
-      - name: Comentar no PR
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
-          gh pr comment $PR_NUMBER --body "$(cat review.txt)"
+          OPENAI_API_MODEL: "gpt-4" # Optional: defaults to "gpt-4"
+          exclude: "**/*.json, **/*.md" # Optional: exclude patterns separated by commas
