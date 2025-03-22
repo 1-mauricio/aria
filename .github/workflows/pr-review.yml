@@ -33,8 +33,27 @@ jobs:
           # Fazendo a requisição para a API do Gemini
           response=$(curl -s -X POST "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${{ secrets.GEMINI_API_KEY }}" \
             -H "Content-Type: application/json" \
-            -d "$(jq -n --arg code "$changed_code" '{contents: [{role: "user", parts: [{text: ("Revise este código e sugira melhorias:\n" + $code)}]}]}')")
-          
+            -d "$(jq -n --arg code "$changed_code" '{
+              contents: [
+                {
+                  role: "system", 
+                  parts: [
+                    {
+                      text: "Você é um revisor de código altamente qualificado, especializado em boas práticas de desenvolvimento e otimização. Seu objetivo é revisar o código fornecido e sugerir melhorias, como refatoração, melhorias de performance, legibilidade, e remoção de código desnecessário. Responda somente com o **diff** do código, sem explicações adicionais, exatamente como um PR de desenvolvedor."
+                    }
+                  ]
+                },
+                {
+                  role: "user", 
+                  parts: [
+                    {
+                      text: "Revise este código e sugira melhorias em formato de diff, seja direto:\n```diff\n$code\n```"
+                    }
+                  ]
+                }
+              ]
+            }')")
+
           echo "API Response: $response"
           
           # Extraindo a resposta do Gemini
