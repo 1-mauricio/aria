@@ -33,10 +33,12 @@ jobs:
               ]
             }' | jq -r '.choices[0].message.content' > review.txt
 
+      - name: Instalar GitHub CLI
+        run: sudo apt update && sudo apt install -y gh
+
       - name: Comentar no PR
-        uses: thollander/actions-comment-on-pr@v2
-        with:
-          message: |
-            💡 **Revisão Automática por IA**  
-            $(cat review.txt)
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+          gh pr comment $PR_NUMBER --body "$(cat review.txt)"
