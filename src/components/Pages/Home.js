@@ -129,7 +129,6 @@ export default function Home({ posts = [], uniqueCategories = [] }) {
 				  <ArticleItem
 					key={post.id}
 					post={post}
-					variant="small"
 				  />
 				))}
 			  </div>
