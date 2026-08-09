@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
-import DonationSection from "../UI/DonationSection";
-import CONFIG from "../../CONFIG";
-import "../styles/about.css";
+import DonationSection from "../features/donations/components/DonationSection";
+import CONFIG from "../CONFIG";
+import "./About.css";
+import { Container, Text } from "../design-system";
 
 export default function About() {
 	useEffect(() => {
@@ -9,14 +10,14 @@ export default function About() {
 	} , []);
 
 	return (
-		<main className="about-container">
+		<Container className="about-container">
 			<div className="about-header">
 				<h1>Sobre {CONFIG.siteName}</h1>
-				<p>
+				<Text color="lighter">
 					Bem-vindo <strong>{CONFIG.siteName}</strong>, o seu lugar
 					para reflexões profundas, análises detalhadas e histórias
 					inspiradoras sobre design, tecnologia, ética e muito mais!
-				</p>
+				</Text>
 			</div>
 
 			<DonationSection width="40%" />
@@ -94,6 +95,6 @@ export default function About() {
 					</p>
 				</div>
 			</section>
-		</main>
+		</Container>
 	);
 }

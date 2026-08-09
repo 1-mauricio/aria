@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../styles/not-found.css";
-import CONFIG from "../../CONFIG";
+import "./NotFound.css";
+import CONFIG from "../CONFIG";
+import { Button } from "../design-system";
 
 document.title = CONFIG.siteName;
 
@@ -12,9 +13,9 @@ export default function NotFound() {
 				<h1>404</h1>
 				<h2>Página não encontrada</h2>
 				<p>Desculpe, a página que você está procurando não existe.</p>
-				<Link to="/" className="home-button">
+				<Button as={Link} variant="pill" to="/">
 					Voltar para Home
-				</Link>
+				</Button>
 			</div>
 		</main>
 	);

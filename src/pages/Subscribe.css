@@ -1,0 +1,21 @@
+.subscribe-container {
+	max-width: 680px;
+	margin: var(--space-40) auto;
+	padding: 0 var(--space-20);
+}
+
+.subscribe-header {
+	text-align: center;
+	margin-bottom: var(--space-40);
+}
+
+.form-group {
+	margin-bottom: var(--space-20);
+}
+
+.form-group label {
+	display: block;
+	margin-bottom: var(--space-5);
+	font-weight: var(--font-weight-medium);
+	color: var(--text-color);
+}
