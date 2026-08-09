@@ -1,6 +1,6 @@
 const CONFIG = {
 	siteName: "A Ária",
-	apiUrl: "https://imprensamalakoff-backend.onrender.com",
+	apiUrl: process.env.REACT_APP_API_URL || "https://imprensamalakoff-backend.onrender.com",
 	pix: "definir o pix",
 	featuredPost: 30,
 	articles: [52, 203],
