@@ -14,7 +14,7 @@ export default function Header() {
 	const [isSearchInputOpen, setIsSearchInputOpen] = useState(!isDesktop);
 	const [isHeaderCollapsed, setIsHeaderCollapsed] = useState(false);
 
-	const headerRef = useRef(null);
+	const headerRef = useRef<HTMLElement>(null);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -60,14 +60,15 @@ export default function Header() {
 	}, []);
 
 	useEffect(() => {
-		const handleClickOutside = (event) => {
+		const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+			const target = event.target as Node;
 			if (
 				(isSearchOpen &&
 					headerRef.current &&
-					!headerRef.current.contains(event.target)) ||
+					!headerRef.current.contains(target)) ||
 				(isMenuOpen &&
 					headerRef.current &&
-					!headerRef.current.contains(event.target))
+					!headerRef.current.contains(target))
 			) {
 				setIsSearchOpen(false);
 				setIsMenuOpen(false);
@@ -116,11 +117,11 @@ export default function Header() {
 		setIsMenuOpen(!isMenuOpen);
 	};
 
-	const handleSearchChange = (e) => {
+	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchQuery(e.target.value);
 	};
 
-	const handleSearchSubmit = (e) => {
+	const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (searchQuery.trim()) {
 			navigate(

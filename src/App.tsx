@@ -27,7 +27,7 @@ export default function App() {
 					<title>{CONFIG.seo.title}</title>
 					<meta name="description" content={CONFIG.seo.description} />
 					<meta name="author" content={CONFIG.siteName} />
-					<meta name="keywords" content={CONFIG.seo.keywords} />
+					<meta name="keywords" content={CONFIG.seo.keywords.join(",")} />
 					<meta property="og:title" content={CONFIG.seo.title} />
 					<meta
 						property="og:description"

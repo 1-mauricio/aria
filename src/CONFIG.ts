@@ -1,4 +1,23 @@
-const CONFIG = {
+export interface Config {
+	siteName: string;
+	apiUrl: string;
+	pix: string;
+	featuredPost: number;
+	articles: number[];
+	cacheExpiration: number;
+	contactEmail: string;
+	siteDescription: string;
+	socialMedia: Record<string, string>;
+	seo: {
+		title: string;
+		description: string;
+		keywords: string[];
+		url: string;
+		image: string;
+	};
+}
+
+const CONFIG: Config = {
 	siteName: "A Ária",
 	apiUrl: process.env.REACT_APP_API_URL || "https://imprensamalakoff-backend.onrender.com",
 	pix: "definir o pix",
