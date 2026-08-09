@@ -1,4 +1,5 @@
 import { searchPosts } from "./searchPosts";
+import { Post } from "../types";
 
 const posts = [
 	{
@@ -22,7 +23,7 @@ const posts = [
 		category: "culinária",
 		content: "Ingredientes e modo de preparo",
 	},
-];
+] as Post[];
 
 describe("searchPosts", () => {
 	it("returns all posts unchanged when there is no search term", () => {
@@ -35,10 +36,14 @@ describe("searchPosts", () => {
 	});
 
 	it("ranks posts with more/stronger matches higher", () => {
-		const result = searchPosts("tecnologia", posts);
+		const result = searchPosts("tecnologia", posts) as (Post & {
+			searchScore: number;
+		})[];
 		expect(result.map((post) => post.id)).toContain(1);
 		expect(result.map((post) => post.id)).toContain(2);
-		expect(result[0].searchScore).toBeGreaterThanOrEqual(result[1].searchScore);
+		expect(result[0].searchScore).toBeGreaterThanOrEqual(
+			result[1].searchScore
+		);
 	});
 
 	it("finds posts via fuzzy (similarity) matches on typos", () => {

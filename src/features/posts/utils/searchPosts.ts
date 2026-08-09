@@ -1,9 +1,17 @@
 import { levenshteinDistance } from "../../../shared/utils/levenshtein";
+import { Post } from "../types";
 
-const isSimilar = (term, word, maxDistance = 2) =>
+const isSimilar = (term: string, word: string, maxDistance = 2): boolean =>
 	levenshteinDistance(term, word) <= maxDistance;
 
-export const searchPosts = (searchTerm, posts) => {
+const SEARCHABLE_FIELDS: (keyof Post)[] = [
+	"title",
+	"subTitle",
+	"category",
+	"content",
+];
+
+export const searchPosts = (searchTerm: string, posts: Post[]): Post[] => {
 	if (!searchTerm) return posts;
 
 	const normalizedTerm = searchTerm.toLowerCase().trim();
@@ -13,10 +21,8 @@ export const searchPosts = (searchTerm, posts) => {
 		.map((post) => {
 			let score = 0;
 
-			const fields = ["title", "subTitle", "category", "content"];
-
-			fields.forEach((field) => {
-				const fieldContent = post[field]?.toLowerCase() || "";
+			SEARCHABLE_FIELDS.forEach((field) => {
+				const fieldContent = String(post[field] ?? "").toLowerCase();
 
 				if (fieldContent.includes(normalizedTerm)) score += 10;
 
