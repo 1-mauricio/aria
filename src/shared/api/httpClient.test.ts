@@ -4,7 +4,7 @@ describe("httpClient", () => {
 	afterEach(() => {
 		jest.restoreAllMocks();
 		jest.useRealTimers();
-		delete global.fetch;
+		delete (global as any).fetch;
 	});
 
 	it("returns parsed JSON on success", async () => {
@@ -12,9 +12,11 @@ describe("httpClient", () => {
 			ok: true,
 			status: 200,
 			json: async () => ({ hello: "world" }),
-		});
+		}) as unknown as typeof fetch;
 
-		const result = await httpClient.get("https://api.test/posts");
+		const result = await httpClient.get<{ hello: string }>(
+			"https://api.test/posts"
+		);
 
 		expect(result).toEqual({ hello: "world" });
 		expect(global.fetch).toHaveBeenCalledWith(
@@ -28,7 +30,7 @@ describe("httpClient", () => {
 			ok: false,
 			status: 404,
 			json: async () => ({}),
-		});
+		}) as unknown as typeof fetch;
 
 		await expect(
 			httpClient.get("https://api.test/posts/1")
@@ -36,7 +38,9 @@ describe("httpClient", () => {
 	});
 
 	it("returns null for 204 No Content responses", async () => {
-		global.fetch = jest.fn().mockResolvedValue({ ok: true, status: 204 });
+		global.fetch = jest
+			.fn()
+			.mockResolvedValue({ ok: true, status: 204 }) as unknown as typeof fetch;
 
 		const result = await httpClient.post("https://api.test/posts/1/like");
 
@@ -44,16 +48,15 @@ describe("httpClient", () => {
 	});
 
 	it("throws an HttpError when the request times out", async () => {
-		global.fetch = jest.fn(
-			(url, { signal }) =>
-				new Promise((resolve, reject) => {
-					signal.addEventListener("abort", () => {
-						const error = new Error("aborted");
-						error.name = "AbortError";
-						reject(error);
-					});
-				})
-		);
+		global.fetch = jest.fn((_url: RequestInfo | URL, options?: RequestInit) => {
+			return new Promise((_resolve, reject) => {
+				options?.signal?.addEventListener("abort", () => {
+					const error = new Error("aborted");
+					error.name = "AbortError";
+					reject(error);
+				});
+			});
+		}) as unknown as typeof fetch;
 
 		await expect(
 			httpClient.get("https://api.test/slow", { timeoutMs: 10 })
