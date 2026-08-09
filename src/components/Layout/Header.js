@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/header.css";
-import CONFIG from "../../CONFIG";
+import { Button } from "../../design-system";
 
 export default function Header() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const [isDarkMode, setIsDarkMode] = useState(
-		localStorage.getItem("theme") == "dark" ? true : false
+		localStorage.getItem("theme") === "dark" ? true : false
 	);
 	const [searchQuery, setSearchQuery] = useState("");
 	const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -16,9 +16,6 @@ export default function Header() {
 
 	const headerRef = useRef(null);
 	const navigate = useNavigate();
-
-	const location = useLocation();
-	const isHome = location.pathname === "/";
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -142,7 +139,7 @@ export default function Header() {
 			<div className="header-content">
 				<div className="left-section">
 					<Link to="/" className="site-title">
-						<img className="logo-img" src="/assets/a-aria.gif" />
+						<img className="logo-img" src="/assets/a-aria.gif" alt="A Ária" />
 					</Link>
 				</div>
 
@@ -260,13 +257,15 @@ export default function Header() {
 						Sobre
 					</Link>
 					<div className="action-buttons">
-						<Link
-							to="/doe"
+						<Button
+							as={Link}
+							variant="compact"
 							className="subscribe-button"
+							to="/doe"
 							onClick={() => setIsMenuOpen(false)}
 						>
 							Apoie
-						</Link>
+						</Button>
 					</div>
 				</nav>
 			</div>
