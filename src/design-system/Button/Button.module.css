@@ -1,0 +1,45 @@
+.base {
+	display: inline-block;
+	border: none;
+	cursor: pointer;
+	text-decoration: none;
+	text-align: center;
+	background-color: var(--button-background);
+	color: var(--button-text);
+	transition: background-color var(--transition-duration-base)
+		var(--transition-easing);
+}
+
+.base:hover {
+	background-color: var(--button-hover-background);
+}
+
+/* Matches the current .donate-button (donate.css) / .subscribe-button (subscribe.css) look: full-width block CTA inside a card. */
+.block {
+	display: block;
+	width: 100%;
+	padding: var(--space-12) var(--space-24);
+	border-radius: var(--radius-4);
+	font-size: var(--font-size-16);
+}
+
+/* Matches the current DonationSection .donate-button look: inline link-style CTA, content-sized. */
+.link {
+	padding: var(--space-10) var(--space-20);
+	border-radius: var(--border-radius);
+}
+
+/* Matches the current .home-button / not-found-content a look. */
+.pill {
+	padding: var(--space-12) var(--space-24);
+	margin: var(--space-10);
+	border-radius: var(--radius-6);
+	font-weight: var(--font-weight-semibold);
+}
+
+/* Matches the current Header "Apoie" CTA: content-sized, no block/width override. */
+.compact {
+	padding: var(--space-12) var(--space-24);
+	border-radius: var(--radius-4);
+	font-size: var(--font-size-16);
+}

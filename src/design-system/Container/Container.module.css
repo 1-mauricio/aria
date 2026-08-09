@@ -1,0 +1,13 @@
+/* Matches the repeated "page container" pattern (about/archive/donate/post-detail). */
+.page {
+	margin: var(--margin-pages);
+	padding: var(--padding-pages);
+}
+
+.maxWidth680 {
+	max-width: 680px;
+}
+
+.maxWidth800 {
+	max-width: 800px;
+}

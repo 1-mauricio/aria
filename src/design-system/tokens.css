@@ -1,0 +1,150 @@
+/*
+ * Tokens de design — contrato entre o código de hoje e o futuro design
+ * system. Qualquer valor visual (cor, espaçamento, raio, sombra, tipografia,
+ * transição) usado em componentes deve vir daqui via var(--token), nunca
+ * como valor solto (hex/px/rem). Trocar o design system no futuro deve, na
+ * maior parte, significar reescrever este arquivo + os primitivos em
+ * src/design-system/, não cada página.
+ *
+ * As escalas abaixo espelham os valores que já existiam espalhados pelo CSS
+ * (auditados via grep) — a intenção aqui é centralizar, não redesenhar. Uma
+ * consolidação de escala (ex.: unificar px/rem, reduzir variações quase
+ * duplicadas) fica para a fase futura de troca de design system.
+ */
+
+:root {
+	/* Cores — paleta atual do site */
+	--primary-color: #8b4513;
+	--primary-hover-color: #70401b;
+	--text-color: #4b4b3e;
+	--text-light-color: #66634f;
+	--text-lighter-color: #857e66;
+	--text-darkest-color: #3a3a31;
+	--background-color: #f5f0e6;
+	--background-hover-color: #ebe5d8;
+	--background-light-color: #f8f4eb;
+	--background-lighter-color: #fdfbf7;
+	--link-color: #8c6338;
+	--border-color: #dfd7c8;
+	--button-background: var(--primary-color);
+	--button-hover-background: var(--primary-hover-color);
+	--button-text: #ffffff;
+	--accent-color: #a05a2c;
+	--spinner-color: var(--primary-color);
+	--shadow-color: rgba(75, 75, 62, 0.1);
+	--tab-active-text-color: #cbc3b1;
+	--overlay-hover-color: rgba(0, 0, 0, 0.1);
+	--icon-color: #000;
+
+	/* Espaçamento (px) — nomeados pelo próprio valor em px */
+	--space-3: 3px;
+	--space-4: 4px;
+	--space-5: 5px;
+	--space-6: 6px;
+	--space-8: 8px;
+	--space-10: 10px;
+	--space-12: 12px;
+	--space-15: 15px;
+	--space-16: 16px;
+	--space-20: 20px;
+	--space-24: 24px;
+	--space-28: 28px;
+	--space-30: 30px;
+	--space-32: 32px;
+	--space-40: 40px;
+	--space-70: 70px;
+
+	/* Espaçamento (rem) */
+	--space-rem-0-3: 0.3rem;
+	--space-rem-0-5: 0.5rem;
+	--space-rem-0-6: 0.6rem;
+	--space-rem-1: 1rem;
+	--space-rem-1-5: 1.5rem;
+	--space-rem-2: 2rem;
+	--space-rem-3: 3rem;
+
+	/* Combinações já existentes (layout de página) */
+	--margin-pages: 3rem auto 2rem auto;
+	--padding-pages: 0 2rem;
+
+	/* Raio de borda */
+	--radius-4: 4px;
+	--radius-6: 6px;
+	--radius-8: 8px;
+	--radius-14: 14px;
+	--radius-16: 16px;
+	--radius-20: 20px;
+	--radius-circle: 50%;
+	--border-radius: var(--radius-8);
+
+	/* Sombra — sempre combinada com --shadow-color/--primary-color do tema atual */
+	--shadow-1: 0 1px 2px var(--shadow-color);
+	--shadow-2: 0 1px 3px var(--shadow-color);
+	--shadow-3: 0 2px 4px var(--shadow-color);
+	--shadow-4: 0 4px 20px var(--shadow-color);
+	--shadow-focus-ring: 0 0 4px var(--primary-color);
+
+	/* Tipografia — tamanho de fonte (px) */
+	--font-size-12: 12px;
+	--font-size-13: 13px;
+	--font-size-14: 14px;
+	--font-size-15: 15px;
+	--font-size-16: 16px;
+	--font-size-18: 18px;
+	--font-size-20: 20px;
+	--font-size-22: 22px;
+	--font-size-24: 24px;
+	--font-size-28: 28px;
+	--font-size-36: 36px;
+
+	/* Tipografia — tamanho de fonte (rem) */
+	--font-size-rem-1: 1rem;
+	--font-size-rem-1-1: 1.1rem;
+	--font-size-rem-1-2: 1.2rem;
+	--font-size-rem-1-5: 1.5rem;
+	--font-size-rem-0-9: 0.9rem;
+	--font-size-rem-2: 2rem;
+	--font-size-rem-2-5: 2.5rem;
+
+	/* Tipografia — peso e família */
+	--font-family-base: "Lexend Deca", serif;
+	--font-family-display: "Giaza", serif;
+	--font-family-content: Arial, sans-serif;
+	--font-weight-normal: normal;
+	--font-weight-medium: 500;
+	--font-weight-semibold: 600;
+	--font-weight-bold: bold;
+	--font-weight-bold-700: 700;
+
+	/* Tipografia — espaçamento entre letras e altura de linha */
+	--letter-spacing-wide: 1px;
+	--line-height-base: 1.6;
+
+	/* Transição */
+	--transition-duration-fast: 0.2s;
+	--transition-duration-base: 0.3s;
+	--transition-easing: ease;
+	--transition-easing-in-out: ease-in-out;
+}
+
+[data-theme="dark"] {
+	--primary-color: #8b4513;
+	--primary-hover-color: #70401b;
+	--text-color: #eae3d2;
+	--text-light-color: #cbc3b1;
+	--text-lighter-color: #aaa393;
+	--text-darkest-color: #ffffff;
+	--background-color: #1a1814;
+	--background-hover-color: #24211d;
+	--background-light-color: #2e2a24;
+	--background-lighter-color: #38342e;
+	--link-color: #8b4513;
+	--border-color: #4a4338;
+	--button-background: var(--primary-color);
+	--button-hover-background: var(--primary-hover-color);
+	--button-text: #eae3d2;
+	--accent-color: #a05a2c;
+	--spinner-color: var(--primary-color);
+	--shadow-color: rgba(0, 0, 0, 0.5);
+	--icon-color: #fff;
+}

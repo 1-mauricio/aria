@@ -1,0 +1,22 @@
+/* Matches the repeated "page header" pattern (donate/subscribe/about: h1 + intro paragraph). */
+.pageTitle {
+	font-size: var(--font-size-rem-2-5);
+	font-weight: var(--font-weight-semibold);
+	margin-bottom: var(--space-10);
+}
+
+.text {
+	font-size: var(--font-size-rem-1-2);
+}
+
+.color-default {
+	color: var(--text-color);
+}
+
+.color-light {
+	color: var(--text-light-color);
+}
+
+.color-lighter {
+	color: var(--text-lighter-color);
+}

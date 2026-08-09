@@ -1,0 +1,35 @@
+.base {
+	border-radius: var(--border-radius);
+}
+
+.background-default {
+	background-color: var(--background-color);
+}
+
+.background-light {
+	background-color: var(--background-light-color);
+}
+
+.padding-sm {
+	padding: var(--space-20);
+}
+
+.padding-md {
+	padding: var(--space-30);
+}
+
+.padding-lg {
+	padding: var(--space-40);
+}
+
+.shadow-md {
+	box-shadow: var(--shadow-3);
+}
+
+.shadow-lg {
+	box-shadow: var(--shadow-4);
+}
+
+.text-center {
+	text-align: center;
+}
