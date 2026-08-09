@@ -10,17 +10,18 @@ import { useNavigate } from "react-router-dom";
 import { usePosts } from "../hooks/usePosts";
 import { useCategories } from "../hooks/useCategories";
 import { Tag, Spinner } from "../../../design-system";
+import { Post } from "../types";
 
 export default function Home() {
 	const { data: posts = [], isLoading: postsLoading } = usePosts();
 	const categories = useCategories();
 
-	const [mostViewedWeek, setMostViewedWeek] = useState([]);
-	const [mostViewedMonth, setMostViewedMonth] = useState([]);
-	const [featuredPost, setFeaturedPost] = useState(null);
-	const [articlePosts, setArticlePosts] = useState([]);
-	const [latestPosts, setLatestPosts] = useState([]);
-	const [selectedTopics] = useState([]);
+	const [mostViewedWeek, setMostViewedWeek] = useState<Post[]>([]);
+	const [mostViewedMonth, setMostViewedMonth] = useState<Post[]>([]);
+	const [featuredPost, setFeaturedPost] = useState<Post | null>(null);
+	const [articlePosts, setArticlePosts] = useState<Post[]>([]);
+	const [latestPosts, setLatestPosts] = useState<Post[]>([]);
+	const [selectedTopics] = useState<string[]>([]);
 	const [searchTerm, setSearchTerm] = useState("");
 
 	const navigate = useNavigate();
@@ -51,7 +52,7 @@ export default function Home() {
 		}
 	}, [posts]);
 
-	const handleSearchSubmit = (e) => {
+	const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (searchTerm.trim()) {
 			navigate(
@@ -72,7 +73,9 @@ export default function Home() {
 				type="text"
 				placeholder="Pesquisar..."
 				value={searchTerm}
-				onChange={(e) => setSearchTerm(e.target.value)}
+				onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+					setSearchTerm(e.target.value)
+				}
 			  />
 			</form>
 

@@ -6,14 +6,15 @@ import CONFIG from "../../../CONFIG";
 import { usePosts } from "../hooks/usePosts";
 import { searchPosts } from "../utils/searchPosts";
 import { Container, Spinner, Button } from "../../../design-system";
+import { Post } from "../types";
 
 export default function Search() {
 	const location = useLocation();
 	const { data: posts = [], isLoading: postsLoading } = usePosts();
 	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(null);
-	const [search, setSearch] = useState(null);
-	const [results, setResults] = useState([]);
+	const [error, setError] = useState<string | null>(null);
+	const [search, setSearch] = useState<string | null>(null);
+	const [results, setResults] = useState<Post[]>([]);
 
 	useEffect(() => {
 		document.title = "Pesquisa - " + CONFIG.siteName;
@@ -77,7 +78,7 @@ export default function Search() {
 			<h1>Resultado(s) para:</h1>
 			<h2 style={{ marginLeft: "var(--space-rem-1)" }}>{search}</h2>
 			<div className="filtered-posts">
-				<PostList key={search} postsList={results} />
+				<PostList key={search ?? ""} postsList={results} />
 			</div>
 		</Container>
 	);

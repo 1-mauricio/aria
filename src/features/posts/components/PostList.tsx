@@ -1,8 +1,13 @@
 import React from "react";
 import PostItem from "./PostItem";
 import "./PostList.css";
+import { Post } from "../types";
 
-export default function PostList({ postsList = [] }) {
+interface PostListProps {
+	postsList?: Post[];
+}
+
+export default function PostList({ postsList = [] }: PostListProps) {
 	return (
 		<div className="posts-list">
 			{postsList.length > 0 ? (

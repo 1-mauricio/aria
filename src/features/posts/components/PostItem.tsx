@@ -1,8 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./PostItem.css";
+import { Post } from "../types";
 
-export default function PostItem({ post }) {
+interface PostItemProps {
+	post: Post;
+}
+
+export default function PostItem({ post }: PostItemProps) {
 	return (
 		<Link to={`/p/${post.customLink || post.id}`} className="post-item-link">
 			<article className="post-item">

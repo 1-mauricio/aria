@@ -1,8 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./FeaturedPost.css";
+import { Post } from "../types";
 
-export default function FeaturedPost({ featuredPost }) {
+interface FeaturedPostProps {
+	featuredPost: Post | null;
+}
+
+export default function FeaturedPost({ featuredPost }: FeaturedPostProps) {
 	if (!featuredPost) return null;
 
 	return (

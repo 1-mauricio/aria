@@ -14,7 +14,7 @@ export default function PostDetail() {
 
 	const post =
 		posts.find((post) => post.customLink === id) ||
-		posts.find((post) => post.id === parseInt(id));
+		posts.find((post) => post.id === parseInt(id ?? "", 10));
 
 	useEffect(() => {
 		if (!post) return;

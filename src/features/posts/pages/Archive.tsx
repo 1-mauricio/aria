@@ -6,6 +6,7 @@ import CONFIG from "../../../CONFIG";
 import { usePosts } from "../hooks/usePosts";
 import { useCategories } from "../hooks/useCategories";
 import { Container, Spinner } from "../../../design-system";
+import { Post } from "../types";
 
 export default function Archive() {
 	const { category: routeCategory } = useParams();
@@ -14,7 +15,7 @@ export default function Archive() {
 	const [selectedCategory, setSelectedCategory] = useState(
 		routeCategory?.toLowerCase() || "all"
 	);
-	const [filteredPosts, setFilteredPosts] = useState([]);
+	const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
 
 	const navigate = useNavigate();
 
@@ -41,7 +42,7 @@ export default function Archive() {
 		}
 	}, [routeCategory]);
 
-	const handleCategoryChange = (category) => {
+	const handleCategoryChange = (category: string) => {
 		setSelectedCategory(category.toLowerCase());
 		if (category === "all") {
 			navigate(`/posts`);

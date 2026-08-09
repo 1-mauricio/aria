@@ -1,8 +1,13 @@
 import { useState, useEffect } from "react";
 import "./PostInteractions.css";
 import { useLikePost } from "../hooks/useLikePost";
+import { Post } from "../types";
 
-const PostInteractions = ({ post }) => {
+interface PostInteractionsProps {
+	post: Post;
+}
+
+const PostInteractions = ({ post }: PostInteractionsProps) => {
 	const [liked, setLiked] = useState(false);
 	const [postLikes, setPostLikes] = useState(post.likes);
 	const { like, unlike } = useLikePost();

@@ -1,7 +1,13 @@
 import { Link } from "react-router-dom";
 import "./ArticleItem.css";
+import { Post } from "../types";
 
-const ArticleItem = ({ post, variant = "default" }) => {
+interface ArticleItemProps {
+	post: Post;
+	variant?: "default" | "small";
+}
+
+const ArticleItem = ({ post, variant = "default" }: ArticleItemProps) => {
 	return (
 		<Link to={`/p/${post.customLink || post.id}`}>
 			<article className={`article-item ${variant}`}>
