@@ -1,140 +1,57 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import Header from "./components/Layout/Header";
-import Home from "./components/Pages/Home";
-import Archive from "./components/Pages/Archive";
-import PostDetail from "./components/Pages/PostDetail";
-import About from "./components/Pages/About";
+import Home from "./features/posts/pages/Home";
+import Archive from "./features/posts/pages/Archive";
+import PostDetail from "./features/posts/pages/PostDetail";
+import About from "./pages/About";
 import Footer from "./components/Layout/Footer";
-import Subscribe from "./components/Pages/Subscribe";
-import Donate from "./components/Pages/Donate";
-import NotFound from "./components/Pages/NotFound";
-import Search from "./components/UI/Search";
+import Subscribe from "./pages/Subscribe";
+import Donate from "./features/donations/pages/Donate";
+import NotFound from "./pages/NotFound";
+import Search from "./features/posts/pages/SearchPage";
 
-import { fetchPosts } from "./services/PostService";
 import CONFIG from "./CONFIG";
 import { Helmet } from "react-helmet";
-import { onCLS, onFCP, onFID, onLCP, onTTFB } from "web-vitals";
+import { queryClient, persistOptions } from "./shared/api/queryClient";
 
 export default function App() {
-	const [posts, setPosts] = useState(() => {
-		const cached = localStorage.getItem("cached_posts");
-		return cached ? JSON.parse(cached) : [];
-	});
-	const [loading, setLoading] = useState(
-		!localStorage.getItem("cached_posts")
-	);
-	const [error, setError] = useState(null);
-	const [categories, setCategories] = useState([])
-
-	const CACHE_EXPIRATION_TIME = CONFIG.cacheExpiration * 60 * 1000;
-
-	useEffect(() => {
-		const uniqueCategories = [
-			...new Set(posts.map((post) => post.category?.toLowerCase())),
-		].filter(Boolean);
-
-		setCategories(uniqueCategories);
-
-	}, [posts]);
-
-	useEffect(() => {
-		const loadPosts = async () => {
-			try {
-				const cachedTimestamp = localStorage.getItem("posts_timestamp");
-				const isExpired =
-					!cachedTimestamp ||
-					Date.now() - parseInt(cachedTimestamp) >
-						CACHE_EXPIRATION_TIME;
-
-				if (isExpired) {
-					setLoading(true);
-					const data = await fetchPosts();
-					setPosts(data);
-					localStorage.setItem("cached_posts", JSON.stringify(data));
-					localStorage.setItem(
-						"posts_timestamp",
-						Date.now().toString()
-					);
-				}
-			} catch (err) {
-				console.log(err);
-				setError("Erro ao carregar posts.");
-			} finally {
-				setLoading(false);
-			}
-		};
-		loadPosts();
-	}, []);
-
-	/*
-	useEffect(() => {
-		onCLS((metric) => {
-			console.log("Cumulative Layout Shift:", metric);
-		});
-		onFCP((metric) => {
-			console.log("First Contentful Paint:", metric);
-		});
-		onFID((metric) => {
-			console.log("First Input Delay:", metric);
-		});
-		onLCP((metric) => {
-			console.log("Largest Contentful Paint:", metric);
-		});
-		onTTFB((metric) => {
-			console.log("Time to First Byte:", metric);
-		});
-	}, []);
-	*/
-
-	if (loading) {
-		return (
-			<div className="loading-container">
-				<div className="loading-spinner"></div>
-			</div>
-		);
-	}
-
-	if (error) {
-		return <div className="error-message">{error}</div>;
-	}
-
 	return (
-		<BrowserRouter>
-			<Helmet>
-				<title>{CONFIG.seo.title}</title>
-				<meta name="description" content={CONFIG.seo.description} />
-				<meta name="author" content={CONFIG.siteName} />
-				<meta name="keywords" content={CONFIG.seo.keywords} />
-				<meta property="og:title" content={CONFIG.seo.title} />
-				<meta
-					property="og:description"
-					content={CONFIG.seo.description}
-				/>
-				<meta property="og:url" content={CONFIG.seo.url} />
-				<meta property="og:image" content={CONFIG.seo.image} />
-				<meta property="og:type" content="website" />
-			</Helmet>
-			<Header />
-			<Routes>
-				<Route path="/" element={<Home posts={posts} uniqueCategories={categories} />} />
-				<Route path="/posts" element={<Archive data={posts} uniqueCategories={categories} />} />
-				<Route
-					path="/posts/:category"
-					element={<Archive data={posts} uniqueCategories={categories} />}
-				/>
-				<Route path="p/:id" element={<PostDetail posts={posts} />} />
-				<Route
-					path="p/:titulo"
-					element={<PostDetail posts={posts} />}
-				/>
-				<Route path="/sobre" element={<About />} />
-				<Route path="/inscreva-se" element={<Subscribe />} />
-				<Route path="/doe" element={<Donate />} />
-				<Route path="/search" element={<Search data={posts} />} />
-				<Route path="*" element={<NotFound />} />
-			</Routes>
-			<Footer />
-		</BrowserRouter>
+		<PersistQueryClientProvider
+			client={queryClient}
+			persistOptions={persistOptions}
+		>
+			<BrowserRouter>
+				<Helmet>
+					<title>{CONFIG.seo.title}</title>
+					<meta name="description" content={CONFIG.seo.description} />
+					<meta name="author" content={CONFIG.siteName} />
+					<meta name="keywords" content={CONFIG.seo.keywords} />
+					<meta property="og:title" content={CONFIG.seo.title} />
+					<meta
+						property="og:description"
+						content={CONFIG.seo.description}
+					/>
+					<meta property="og:url" content={CONFIG.seo.url} />
+					<meta property="og:image" content={CONFIG.seo.image} />
+					<meta property="og:type" content="website" />
+				</Helmet>
+				<Header />
+				<Routes>
+					<Route path="/" element={<Home />} />
+					<Route path="/posts" element={<Archive />} />
+					<Route path="/posts/:category" element={<Archive />} />
+					<Route path="p/:id" element={<PostDetail />} />
+					<Route path="p/:titulo" element={<PostDetail />} />
+					<Route path="/sobre" element={<About />} />
+					<Route path="/inscreva-se" element={<Subscribe />} />
+					<Route path="/doe" element={<Donate />} />
+					<Route path="/search" element={<Search />} />
+					<Route path="*" element={<NotFound />} />
+				</Routes>
+				<Footer />
+			</BrowserRouter>
+		</PersistQueryClientProvider>
 	);
 }
