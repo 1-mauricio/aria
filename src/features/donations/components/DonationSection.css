@@ -1,0 +1,25 @@
+.donation-section {
+	margin: var(--space-40) auto;
+	padding: var(--space-20);
+	background-color: var(--background-light-color);
+	border-radius: var(--border-radius);
+	box-shadow: var(--shadow-3);
+	text-align: center;
+}
+
+.donation-section h2 {
+	color: var(--text-color);
+	margin-bottom: var(--space-15);
+}
+
+.donation-section p {
+	margin-bottom: var(--space-20);
+}
+
+@media (max-width: 768px) {
+	.donation-section {
+		width: 100% !important;
+		margin: var(--space-20) 0;
+		border-radius: 0;
+	}
+}

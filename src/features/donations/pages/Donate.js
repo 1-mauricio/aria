@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import "../styles/donate.css";
-import CONFIG from "../../CONFIG";
+import "./Donate.css";
+import CONFIG from "../../../CONFIG";
+import { Card, Button, Container, Heading, Text } from "../../../design-system";
 
 export default function Donate() {
 	const [copied, setCopied] = useState(false);
@@ -36,37 +37,21 @@ export default function Donate() {
 	}, []);
 
 	return (
-		<main className="donate-container">
+		<Container maxWidth="680" className="donate-container">
 			<section className="donate-header">
-				<h1>Apoie {CONFIG.siteName}</h1>
-				<p>Ajude-nos a manter o conteúdo gratuito e de qualidade.</p>
+				<Heading level={1}>Apoie {CONFIG.siteName}</Heading>
+				<Text>Ajude-nos a manter o conteúdo gratuito e de qualidade.</Text>
 			</section>
 
 			<section className="donate-options">
-				<div className="donate-card">
+				<Card padding="md" textCenter>
 					<h2>PIX</h2>
 					<p>Chave: {chavePix}</p>
-					<button className="donate-button" onClick={copyToClipboard}>
+					<Button variant="block" onClick={copyToClipboard}>
 						{copied ? "Copiado!" : "Copiar Chave"}
-					</button>
-				</div>
-
-				{/*
-        <div className="donate-card">
-          <h2>Assinatura Mensal</h2>
-          <p>A partir de R$9,90/mês</p>
-          <button className="donate-button">Assinar</button>
-        </div>
-        */}
-
-				{/*
-        <div className="donate-card">
-          <h2>Contribuição Única</h2>
-          <p>Escolha o valor</p>
-          <button className="donate-button">Contribuir</button>
-        </div>
-        */}
+					</Button>
+				</Card>
 			</section>
-		</main>
+		</Container>
 	);
 }
