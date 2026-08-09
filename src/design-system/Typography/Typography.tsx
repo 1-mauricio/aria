@@ -1,4 +1,15 @@
+import React from "react";
 import styles from "./Typography.module.css";
+
+const styleMap = styles as Record<string, string>;
+
+export interface HeadingProps {
+	level?: 1 | 2 | 3 | 4;
+	variant?: "pageTitle";
+	className?: string;
+	children?: React.ReactNode;
+	[key: string]: any;
+}
 
 /**
  * Heading levels 1-4. `variant` selects a named size treatment; today only
@@ -6,10 +17,24 @@ import styles from "./Typography.module.css";
  * headers). Component-specific headings (article titles, featured post
  * title, etc.) keep their own component CSS, tokenized.
  */
-export function Heading({ level = 2, variant = "pageTitle", className = "", ...props }) {
-	const Tag = `h${level}`;
-	const variantClass = styles[variant] || "";
-	return <Tag className={`${variantClass} ${className}`.trim()} {...props} />;
+export function Heading({
+	level = 2,
+	variant = "pageTitle",
+	className = "",
+	...props
+}: HeadingProps) {
+	const HeadingTag = `h${level}` as keyof React.JSX.IntrinsicElements;
+	const variantClass = styleMap[variant] || "";
+	return <HeadingTag className={`${variantClass} ${className}`.trim()} {...props} />;
+}
+
+export interface TextProps {
+	as?: React.ElementType;
+	variant?: "text";
+	color?: "default" | "light" | "lighter";
+	className?: string;
+	children?: React.ReactNode;
+	[key: string]: any;
 }
 
 /** Body text. `color` maps to the text color scale (default/light/lighter). */
@@ -19,10 +44,13 @@ export function Text({
 	color = "default",
 	className = "",
 	...props
-}) {
-	const variantClass = styles[variant] || "";
-	const colorClass = styles[`color-${color}`] || "";
+}: TextProps) {
+	const variantClass = styleMap[variant] || "";
+	const colorClass = styleMap[`color-${color}`] || "";
 	return (
-		<Component className={`${variantClass} ${colorClass} ${className}`.trim()} {...props} />
+		<Component
+			className={`${variantClass} ${colorClass} ${className}`.trim()}
+			{...props}
+		/>
 	);
 }

@@ -1,4 +1,18 @@
+import React from "react";
 import styles from "./Card.module.css";
+
+export interface CardProps {
+	background?: "default" | "light";
+	padding?: "sm" | "md" | "lg";
+	shadow?: "none" | "md" | "lg";
+	textCenter?: boolean;
+	className?: string;
+	style?: React.CSSProperties;
+	children?: React.ReactNode;
+	[key: string]: any;
+}
+
+const styleMap = styles as Record<string, string>;
 
 /**
  * Generic surface primitive (background + padding + radius + optional
@@ -13,13 +27,13 @@ export default function Card({
 	className = "",
 	style,
 	...props
-}) {
+}: CardProps) {
 	const classes = [
 		styles.base,
-		styles[`background-${background}`],
-		styles[`padding-${padding}`],
-		shadow !== "none" ? styles[`shadow-${shadow}`] : "",
-		textCenter ? styles["text-center"] : "",
+		styleMap[`background-${background}`],
+		styleMap[`padding-${padding}`],
+		shadow !== "none" ? styleMap[`shadow-${shadow}`] : "",
+		textCenter ? styleMap["text-center"] : "",
 		className,
 	]
 		.filter(Boolean)

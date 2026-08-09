@@ -1,4 +1,15 @@
+import React from "react";
 import styles from "./Button.module.css";
+
+export type ButtonVariant = "block" | "link" | "pill" | "compact";
+
+export interface ButtonProps {
+	as?: React.ElementType;
+	variant?: ButtonVariant;
+	className?: string;
+	children?: React.ReactNode;
+	[key: string]: any;
+}
 
 /**
  * CTA button primitive. Covers the "filled brown button" pattern repeated
@@ -10,8 +21,8 @@ export default function Button({
 	variant = "block",
 	className = "",
 	...props
-}) {
-	const variantClass = styles[variant] || styles.block;
+}: ButtonProps) {
+	const variantClass = (styles as Record<string, string>)[variant] || styles.block;
 	return (
 		<Component
 			className={`${styles.base} ${variantClass} ${className}`.trim()}

@@ -1,4 +1,13 @@
+import React from "react";
 import styles from "./Container.module.css";
+
+export interface ContainerProps {
+	as?: React.ElementType;
+	maxWidth?: "680" | "800";
+	className?: string;
+	children?: React.ReactNode;
+	[key: string]: any;
+}
 
 /**
  * Page-level wrapper reproducing the repeated `margin: var(--margin-pages);
@@ -9,9 +18,14 @@ export default function Container({
 	maxWidth,
 	className = "",
 	...props
-}) {
-	const widthClass = maxWidth ? styles[`maxWidth${maxWidth}`] || "" : "";
+}: ContainerProps) {
+	const widthClass = maxWidth
+		? (styles as Record<string, string>)[`maxWidth${maxWidth}`] || ""
+		: "";
 	return (
-		<Component className={`${styles.page} ${widthClass} ${className}`.trim()} {...props} />
+		<Component
+			className={`${styles.page} ${widthClass} ${className}`.trim()}
+			{...props}
+		/>
 	);
 }
