@@ -3,21 +3,27 @@ import "./Subscribe.css";
 import CONFIG from "../CONFIG";
 import { Card, Button, Input, Heading, Text } from "../design-system";
 
+interface SubscribeFormData {
+	name: string;
+	email: string;
+	interests: string[];
+}
+
 export default function Subscribe() {
 	document.title = "Inscreva-se - " + CONFIG.siteName;
 
-	const [formData, setFormData] = useState({
+	const [formData, setFormData] = useState<SubscribeFormData>({
 		name: "",
 		email: "",
 		interests: [],
 	});
 
-	const handleSubmit = (e) => {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		console.log("Form submitted:", formData);
 	};
 
-	const handleChange = (e) => {
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
 		setFormData((prev) => ({
 			...prev,

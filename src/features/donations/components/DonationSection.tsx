@@ -2,7 +2,11 @@ import React from "react";
 import { Button } from "../../../design-system";
 import "./DonationSection.css";
 
-const DonationSection = ({ width = "50%" }) => {
+interface DonationSectionProps {
+	width?: string;
+}
+
+const DonationSection = ({ width = "50%" }: DonationSectionProps) => {
 	return (
 		<section className="donation-section" style={{ width }}>
 			<h2>Apoie este blog</h2>
