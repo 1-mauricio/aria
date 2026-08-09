@@ -2,16 +2,16 @@
 .home-container {
 	max-width: 1200px;
 	margin: 0 auto;
-	padding: 20px;
+	padding: var(--space-20);
 }
 
 /* Search Section */
 .search-section-home {
 	display: flex;
 	align-items: center;
-	gap: 24px;
+	gap: var(--space-24);
 	width: 100%;
-	padding: 20px 0;
+	padding: var(--space-20) 0;
 }
 
 .search-bar-home {
@@ -20,10 +20,10 @@
 
 .search-bar-home input {
 	width: 100%;
-	padding: 12px 16px;
+	padding: var(--space-12) var(--space-16);
 	border: 1px solid var(--border-color);
-	border-radius: 20px;
-	font-size: 14px;
+	border-radius: var(--radius-20);
+	font-size: var(--font-size-14);
 	background-color: var(--background-light-color);
 }
 
@@ -31,43 +31,27 @@
 .topics-section {
 	display: flex;
 	align-items: center;
-	gap: 16px;
+	gap: var(--space-16);
 }
 
 .topics-section span {
 	color: var(--text-light-color);
-	font-size: 14px;
+	font-size: var(--font-size-14);
 	white-space: nowrap;
 }
 
 .topics-list {
 	display: flex;
-	gap: 8px;
+	gap: var(--space-8);
 	flex-wrap: wrap;
 	overflow-x: auto;
-}
-
-.topic-tag {
-	text-decoration: none;
-	padding: 6px 16px;
-	border-radius: 16px;
-	background-color: var(--background-light-color);
-	color: var(--text-color);
-	font-size: 13px;
-	transition: all 0.2s ease;
-	white-space: nowrap;
-}
-
-.topic-tag.active {
-	background-color: var(--primary-color);
-	color: white;
 }
 
 /* Featured Content */
 .featured-content {
 	display: grid;
 	grid-template-columns: 1fr 400px;
-	gap: 32px;
+	gap: var(--space-32);
 
 	border-bottom: 1px solid var(--border-color);
 }
@@ -75,32 +59,32 @@
 .featured-articles {
 	display: flex;
 	flex-direction: column;
-	gap: 20px;
+	gap: var(--space-20);
 }
 
 /* Main Content Grid */
 .content-grid {
 	display: grid;
 	grid-template-columns: 1fr 300px;
-	gap: 40px;
+	gap: var(--space-40);
 }
 
 /* Latest Posts */
 .latest-posts {
-	margin-top: 40px;
+	margin-top: var(--space-40);
 }
 
 .latest-posts h2 {
-	font-size: 20px;
-	font-weight: 600;
-	margin-bottom: 20px;
+	font-size: var(--font-size-20);
+	font-weight: var(--font-weight-semibold);
+	margin-bottom: var(--space-20);
 	color: var(--text-color);
 }
 
 .posts-list {
 	display: flex;
 	flex-direction: column;
-	gap: 24px;
+	gap: var(--space-24);
 }
 
 .posts-list a {
@@ -110,9 +94,9 @@
 /* Sidebar */
 .sidebar {
 	position: sticky;
-	top: 3rem;
+	top: var(--space-rem-3);
 	height: fit-content;
-	padding-left: 2rem;
+	padding-left: var(--space-rem-2);
 	border-left: 1px solid var(--border-color);
 }
 

@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import "../styles/post-interactions.css";
-import { likePost, unlikePost } from "../../services/PostService";
+import "./PostInteractions.css";
+import { useLikePost } from "../hooks/useLikePost";
 
 const PostInteractions = ({ post }) => {
 	const [liked, setLiked] = useState(false);
-	const [postLikes, setPostLikes] = useState(post.likes)
+	const [postLikes, setPostLikes] = useState(post.likes);
+	const { like, unlike } = useLikePost();
 
 	useEffect(() => {
 		const storedLiked = localStorage.getItem(`liked_${post.id}`);
@@ -13,20 +14,19 @@ const PostInteractions = ({ post }) => {
 		}
 	}, [post.id]);
 
-	const handleLike = async () => {
+	const handleLike = () => {
 		const newLiked = !liked;
 		setLiked(newLiked);
 
 		if (newLiked) {
-			likePost(post); 
+			like(post.id);
 			setPostLikes(postLikes + 1);
 		} else {
-			unlikePost(post);
+			unlike(post.id);
 			setPostLikes(postLikes - 1);
 		}
 
 		localStorage.setItem(`liked_${post.id}`, newLiked.toString());
-
 	};
 
 	const handleShare = async () => {

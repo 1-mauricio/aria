@@ -1,28 +1,28 @@
 .post-interactions {
 	display: flex;
 	justify-content: center;
-	margin-top: 2rem;
+	margin-top: var(--space-rem-2);
 }
 
 .post-interactions .tab-navigation {
 	display: flex;
 	background-color: var(--background-light-color);
-	padding: 3px;
-	border-radius: 16px;
-	box-shadow: 0 2px 4px var(--shadow-color);
+	padding: var(--space-3);
+	border-radius: var(--radius-16);
+	box-shadow: var(--shadow-3);
 }
 
 .post-interactions .tab-button {
 	display: flex;
 	align-items: center;
-	gap: 6px;
-	padding: 6px 12px;
+	gap: var(--space-6);
+	padding: var(--space-6) var(--space-12);
 	border: none;
-	border-radius: 14px;
-	font-size: 13px;
-	font-weight: 500;
+	border-radius: var(--radius-14);
+	font-size: var(--font-size-13);
+	font-weight: var(--font-weight-medium);
 	cursor: pointer;
-	transition: all 0.2s ease;
+	transition: all var(--transition-duration-fast) var(--transition-easing);
 	background: transparent;
 	color: var(--text-light-color);
 }
@@ -33,7 +33,7 @@
 }
 
 .post-interactions svg {
-	transition: all 0.2s ease;
+	transition: all var(--transition-duration-fast) var(--transition-easing);
 }
 
 .post-interactions .tab-button:hover svg {

@@ -1,79 +1,55 @@
 import React, { useEffect, useState } from "react";
-import PostItem from "../UI/PostItem";
-import ArticleItem from "../UI/ArticleItem";
-import DonationSection from "../UI/DonationSection";
-import FeaturedPost from "../UI/FeaturedPost";
-import MostViewedPosts from "../UI/MostViewedPosts";
-import "../styles/home.css";
-import CONFIG from "../../CONFIG";
+import PostItem from "../components/PostItem";
+import ArticleItem from "../components/ArticleItem";
+import DonationSection from "../../../features/donations/components/DonationSection";
+import FeaturedPost from "../components/FeaturedPost";
+import MostViewedPosts from "../components/MostViewedPosts";
+import "./Home.css";
+import CONFIG from "../../../CONFIG";
 import { useNavigate } from "react-router-dom";
+import { usePosts } from "../hooks/usePosts";
+import { useCategories } from "../hooks/useCategories";
+import { Tag, Spinner } from "../../../design-system";
 
-export default function Home({ posts = [], uniqueCategories = [] }) {
-	const [loading, setLoading] = useState(true);
+export default function Home() {
+	const { data: posts = [], isLoading: postsLoading } = usePosts();
+	const categories = useCategories();
+
 	const [mostViewedWeek, setMostViewedWeek] = useState([]);
 	const [mostViewedMonth, setMostViewedMonth] = useState([]);
-	const [mostViewedAllTime, setMostViewedAllTime] = useState([]);
-	const [featuredPost, setfeaturedPost] = useState(null);
+	const [featuredPost, setFeaturedPost] = useState(null);
 	const [articlePosts, setArticlePosts] = useState([]);
-	const [latestPosts, setlatestPosts] = useState([]);
-	const [categories, setCategories] = useState([]);
-	const [selectedTopics, setSelectedTopics] = useState([]);
+	const [latestPosts, setLatestPosts] = useState([]);
+	const [selectedTopics] = useState([]);
 	const [searchTerm, setSearchTerm] = useState("");
 
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		setCategories(uniqueCategories);
-	}, [uniqueCategories]);
-
-	useEffect(() => {
-		setLoading(true);
 		document.title = "Home - " + CONFIG.siteName;
 
 		if (posts.length > 0) {
 			const featuredId = CONFIG.featuredPost;
-
-			const featuredPost = posts.find((post) => post.id === featuredId);
-
-			if (featuredPost) {
-				setfeaturedPost(featuredPost);
-			} else {
-				setfeaturedPost(posts.length > 0 ? posts[0] : null);
-			}
+			const found = posts.find((post) => post.id === featuredId);
+			setFeaturedPost(found || posts[0]);
 
 			if (CONFIG.articles) {
 				const articlePostsIds = CONFIG.articles;
-				const articlePosts = posts.filter((post) =>
+				const foundArticles = posts.filter((post) =>
 					articlePostsIds.includes(post.id)
 				);
-
-				if (articlePosts.length > 0) {
-					setArticlePosts(articlePosts);
-				} else {
-					setArticlePosts([]);
-				}
+				setArticlePosts(foundArticles);
 			}
 
-			setlatestPosts(posts);
-
-			const sortedWeek = posts
-				.sort((a, b) => b.viewsThisWeek - a.viewsThisWeek)
-				.slice(0, 3);
-			setMostViewedWeek(sortedWeek);
-
-			const sortedMonth = posts
-				.sort((a, b) => b.viewsThisMonth - a.viewsThisMonth)
-				.slice(0, 3);
-			setMostViewedMonth(sortedMonth);
-
-			const sortedAllTime = posts
-				.sort((a, b) => b.viewsThisMonth - a.viewsThisMonth)
-				.slice(0, 3);
-			setMostViewedAllTime(sortedAllTime);
-
-			setLoading(false);
+			setLatestPosts(posts);
+			setMostViewedWeek(
+				[...posts].sort((a, b) => b.viewsThisWeek - a.viewsThisWeek).slice(0, 3)
+			);
+			setMostViewedMonth(
+				[...posts].sort((a, b) => b.viewsThisMonth - a.viewsThisMonth).slice(0, 3)
+			);
 		}
-	}, []);
+	}, [posts]);
 
 	const handleSearchSubmit = (e) => {
 		e.preventDefault();
@@ -84,12 +60,8 @@ export default function Home({ posts = [], uniqueCategories = [] }) {
 		}
 	};
 
-	if (loading) {
-		return (
-			<div className="loading-container">
-				<div className="loading-spinner"></div>
-			</div>
-		);
+	if (postsLoading) {
+		return <Spinner />;
 	}
 
 	return (
@@ -103,26 +75,27 @@ export default function Home({ posts = [], uniqueCategories = [] }) {
 				onChange={(e) => setSearchTerm(e.target.value)}
 			  />
 			</form>
-	  
+
 			<div className="topics-section">
 			  <span>Tópicos:</span>
 			  <div className="topics-list">
 				{categories.map((topic) => (
-				  <a
+				  <Tag
+					as="a"
 					key={topic}
-					className={`topic-tag ${selectedTopics.includes(topic) ? "active" : ""}`}
+					active={selectedTopics.includes(topic)}
 					href={"/posts/" + topic}
 				  >
 					{topic}
-				  </a>
+				  </Tag>
 				))}
 			  </div>
 			</div>
 		  </section>
-	  
+
 		  <div className="featured-content">
 			<FeaturedPost featuredPost={featuredPost} />
-			
+
 			<section className="featured-articles">
 			  <div className="posts-list">
 				{articlePosts.map((post) => (
@@ -135,7 +108,7 @@ export default function Home({ posts = [], uniqueCategories = [] }) {
 			  </div>
 			</section>
 		  </div>
-	  
+
 		  <div className="content-grid">
 			<div className="main-content">
 			  <section className="latest-posts">
@@ -147,7 +120,7 @@ export default function Home({ posts = [], uniqueCategories = [] }) {
 				</div>
 			  </section>
 			</div>
-	  
+
 			<aside className="sidebar">
 			  <DonationSection width="100%" />
 			  <MostViewedPosts
@@ -158,4 +131,4 @@ export default function Home({ posts = [], uniqueCategories = [] }) {
 		  </div>
 		</main>
 	  );
-	}	  
+	}

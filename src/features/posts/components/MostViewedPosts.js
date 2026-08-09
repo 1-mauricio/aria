@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "../styles/most-viewed-posts.css";
+import "./MostViewedPosts.css";
 
 const MostViewedPosts = ({ mostViewedWeek, mostViewedMonth }) => {
 	const [activeTab, setActiveTab] = useState("week");
@@ -32,7 +32,7 @@ const MostViewedPosts = ({ mostViewedWeek, mostViewedMonth }) => {
 				{currentList.length ? (
 					currentList.map((post, index) => (
 						<Link
-							to={`/p/${post.customLink}`}
+							to={`/p/${post.customLink || post.id}`}
 							key={post.id}
 							className="most-viewed-item"
 						>

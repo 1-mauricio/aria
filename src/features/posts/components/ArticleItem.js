@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import "../styles/article-item.css";
+import "./ArticleItem.css";
 
 const ArticleItem = ({ post, variant = "default" }) => {
 	return (
-		<Link to={`/p/${post.customLink}`}>
+		<Link to={`/p/${post.customLink || post.id}`}>
 			<article className={`article-item ${variant}`}>
 				<div className="article-content">
 					<div className="article-meta">

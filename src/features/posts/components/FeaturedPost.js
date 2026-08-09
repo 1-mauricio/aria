@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../styles/featured-post.css";
+import "./FeaturedPost.css";
 
 export default function FeaturedPost({ featuredPost }) {
 	if (!featuredPost) return null;
@@ -8,7 +8,7 @@ export default function FeaturedPost({ featuredPost }) {
 	return (
 		<section className="featured-post">
 			<Link
-				to={`/p/${featuredPost.customLink}`}
+				to={`/p/${featuredPost.customLink || featuredPost.id}`}
 				className="featured-post-link"
 			>
 				<article className="featured-post-item">

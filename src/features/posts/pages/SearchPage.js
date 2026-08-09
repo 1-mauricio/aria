@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { searchPost } from "../../services/PostService";
-import "../styles/not-found.css";
-import PostList from "./PostList";
-import CONFIG from "../../CONFIG";
+import PostList from "../components/PostList";
+import "../../../pages/NotFound.css";
+import CONFIG from "../../../CONFIG";
+import { usePosts } from "../hooks/usePosts";
+import { searchPosts } from "../utils/searchPosts";
+import { Container, Spinner, Button } from "../../../design-system";
 
-export default function Search({ data = [] }) {
+export default function Search() {
+	const location = useLocation();
+	const { data: posts = [], isLoading: postsLoading } = usePosts();
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const [search, setSearch] = useState(null);
-	const [postListJSX, setPostListJSX] = useState(null);
-	const location = useLocation();
+	const [results, setResults] = useState([]);
 
-	document.title = "Pesquisa - " + CONFIG.siteName;
-	window.scrollTo(0, 0);
+	useEffect(() => {
+		document.title = "Pesquisa - " + CONFIG.siteName;
+		window.scrollTo(0, 0);
+	}, []);
 
 	useEffect(() => {
 		const queryParams = new URLSearchParams(location.search);
@@ -24,25 +29,20 @@ export default function Search({ data = [] }) {
 			setError(null);
 			setSearch(searchTerm);
 
-			const result = searchPost(searchTerm, data);
+			const result = searchPosts(searchTerm, posts);
 
 			if (result.length > 0) {
-				const jsx = <PostList key={search} postsList={result} />
-				setPostListJSX(jsx);
+				setResults(result);
 				setLoading(false);
 			} else {
 				setError("Erro ao buscar posts");
 				setLoading(false);
 			}
 		}
-	}, [location.search, data]);
+	}, [location.search, posts]);
 
-	if (loading) {
-		return (
-			<div className="loading-container">
-				<div className="loading-spinner"></div>
-			</div>
-		);
+	if (postsLoading || loading) {
+		return <Spinner />;
 	}
 
 	if (error) {
@@ -64,19 +64,21 @@ export default function Search({ data = [] }) {
 						Se ainda não encontrar o que procura, talvez o conteúdo
 						não esteja disponível no momento.
 					</p>
-					<Link to="/" className="home-button">
+					<Button as={Link} variant="pill" to="/">
 						Voltar para a Página Inicial
-					</Link>
+					</Button>
 				</div>
 			</main>
 		);
 	}
 
 	return (
-		<main className="archive-container">
+		<Container className="archive-container">
 			<h1>Resultado(s) para:</h1>
-			<h2 style={{marginLeft: "1rem"}}>{search}</h2>
-			<div className="filtered-posts">{postListJSX}</div>
-		</main>
+			<h2 style={{ marginLeft: "var(--space-rem-1)" }}>{search}</h2>
+			<div className="filtered-posts">
+				<PostList key={search} postsList={results} />
+			</div>
+		</Container>
 	);
 }

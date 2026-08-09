@@ -1,54 +1,45 @@
 import React, { useEffect, useState } from "react";
-import PostList from "../UI/PostList";
-import { useParams } from "react-router-dom";
-import "../styles/archive.css";
-import { useNavigate } from "react-router-dom";
-import CONFIG from "../../CONFIG";
+import PostList from "../components/PostList";
+import { useParams, useNavigate } from "react-router-dom";
+import "./Archive.css";
+import CONFIG from "../../../CONFIG";
+import { usePosts } from "../hooks/usePosts";
+import { useCategories } from "../hooks/useCategories";
+import { Container, Spinner } from "../../../design-system";
 
-export default function Archive({ data = [], uniqueCategories = [] }) {
+export default function Archive() {
 	const { category: routeCategory } = useParams();
-	const [loading, setLoading] = useState(true);
-	const [categories, setCategories] = useState([]);
+	const { data: posts = [], isLoading: postsLoading } = usePosts();
+	const categories = useCategories();
 	const [selectedCategory, setSelectedCategory] = useState(
 		routeCategory?.toLowerCase() || "all"
 	);
 	const [filteredPosts, setFilteredPosts] = useState([]);
-	const [postListJSX, setPostListJSX] = useState(null);
 
 	const navigate = useNavigate();
 
-	document.title = "Arquivo - " + CONFIG.siteName;
+	useEffect(() => {
+		document.title = "Arquivo - " + CONFIG.siteName;
+	}, []);
 
 	useEffect(() => {
-		setCategories(uniqueCategories)
-	}, [uniqueCategories])
-
-	useEffect(() => {
-		setLoading(true);
-
 		const updatedPosts =
 			selectedCategory === "all"
-				? data
-				: data.filter(
+				? posts
+				: posts.filter(
 						(post) =>
 							post.category &&
 							post.category.toLowerCase() === selectedCategory
 				  );
 
 		setFilteredPosts(updatedPosts);
-
-		const jsx = <PostList key={selectedCategory} postsList={updatedPosts} />;
-		setPostListJSX(jsx);
-
-		setLoading(false);
-	}, [data, selectedCategory]);
+	}, [posts, selectedCategory]);
 
 	useEffect(() => {
 		if (routeCategory) {
 			setSelectedCategory(routeCategory.toLowerCase());
 		}
 	}, [routeCategory]);
-
 
 	const handleCategoryChange = (category) => {
 		setSelectedCategory(category.toLowerCase());
@@ -59,16 +50,12 @@ export default function Archive({ data = [], uniqueCategories = [] }) {
 		navigate(`/posts/${category.toLowerCase()}`);
 	};
 
-	if (loading) {
-		return (
-			<div className="loading-container">
-				<div className="loading-spinner"></div>
-			</div>
-		);
+	if (postsLoading) {
+		return <Spinner />;
 	}
 
 	return (
-		<main className="archive-container">
+		<Container className="archive-container">
 			<div className="archive-header">
 				<h1>Arquivo</h1>
 				<div className="category-filter">
@@ -100,8 +87,8 @@ export default function Archive({ data = [], uniqueCategories = [] }) {
 				</div>
 			</div>
 			<div className="filtered-posts">
-				{postListJSX}
+				<PostList key={selectedCategory} postsList={filteredPosts} />
 			</div>
-		</main>
+		</Container>
 	);
 }

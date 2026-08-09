@@ -1,28 +1,26 @@
 .archive-container {
-	margin: var(--margin-pages);
-	padding: var(--padding-pages);
 	width: 100%;
 }
 
 .archive-header {
-	margin-bottom: 30px;
+	margin-bottom: var(--space-30);
 }
 
 .archive-header h1 {
-	margin-bottom: 20px;
+	margin-bottom: var(--space-20);
 }
 
 .category-filter {
 	display: flex;
 	justify-content: center;
-	margin-bottom: 20px;
+	margin-bottom: var(--space-20);
 }
 
 @media (max-width: 768px) {
 	.archive-container {
 		margin: 0 !important;
-		margin-top: 1rem !important;
-		padding: 0 20px;
+		margin-top: var(--space-rem-1) !important;
+		padding: 0 var(--space-20);
 		max-width: 1200px;
 	}
 }

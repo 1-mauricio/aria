@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../styles/post-item.css";
+import "./PostItem.css";
 
 export default function PostItem({ post }) {
 	return (
-		<Link to={`/p/${post.customLink}`} className="post-item-link">
+		<Link to={`/p/${post.customLink || post.id}`} className="post-item-link">
 			<article className="post-item">
 			{post.imageUrl && (
 					<div className="post-item-image">
